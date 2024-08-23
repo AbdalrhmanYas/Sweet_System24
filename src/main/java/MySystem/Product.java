@@ -1,14 +1,20 @@
 package MySystem;
 
+import java.time.LocalDate;
+
 public class Product {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
     private double price;
     private int quantity;
-    private String store;
+    private final String store;
 
     private int salesQuantity;
     private double revenue;
+
+    private double discountPercentage;
+    private LocalDate discountStartDate;
+    private LocalDate discountEndDate;
 
     public Product(int id, String name, double price, int quantity, String store) {
         this.id = id;
@@ -18,10 +24,53 @@ public class Product {
         this.store = store;
     }
 
+
+
+    public void setDiscount(double discountPercentage, LocalDate startDate, LocalDate endDate) {
+        this.discountPercentage = discountPercentage;
+        this.discountStartDate = startDate;
+        this.discountEndDate = endDate;
+    }
+
+    public void removeDiscount() {
+        this.discountPercentage = 0;
+        this.discountStartDate = null;
+        this.discountEndDate = null;
+    }
+
+    public boolean isDiscountActive() {
+        LocalDate now = LocalDate.now();
+        return discountPercentage > 0 &&
+                discountStartDate != null &&
+                discountEndDate != null &&
+                !now.isBefore(discountStartDate) &&
+                !now.isAfter(discountEndDate) &&
+                !discountStartDate.isEqual(discountEndDate);
+    }
+
+
+
+    public double getDiscountedPrice() {
+        if (isDiscountActive()) {
+            return price * (1 - discountPercentage / 100);
+        }
+        return price;
+    }
+
     // Getters and setters
-    public int getId() 
+    public int getId()
     {
-    	return id; 
+        return id;
+    }
+
+
+
+    public LocalDate getDiscountStartDate() {
+        return discountStartDate;
+    }
+
+    public LocalDate getDiscountEndDate() {
+        return discountEndDate;
     }
 
     public String getName() { return name; }
