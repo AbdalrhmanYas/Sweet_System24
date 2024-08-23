@@ -22,8 +22,8 @@ public class sweetSys {
     private Map<String, List<String>> userOrderHistory;
     
     private Map<String, List<Feedback>> itemFeedback;
-    
-    
+
+    private  ArrayList<Order> orders;
     private User currentUser;
     
     
@@ -136,6 +136,14 @@ public class sweetSys {
 
 
     private void initializeTestRecipesAndFeedback() {
+
+
+        orders.add(new Order("000", "Hamza", "0599888888", "Nablus", "Shipped", "owner"));
+        orders.add(new Order("001", "Rami", "0599888888", "Nablus", "Delivered", "supplier"));
+        orders.add(new Order("002", "Khaled", "0599888888", "Nablus", "Cancelled", "owner"));
+        orders.add(new Order("003", "Ahmed", "0599888888", "Nablus", "In Progress", "supplier"));
+
+
         recipes.add(new Recipe(1, "Chocolate Cake", "Flour, Sugar, Cocoa", "Mix and bake", "admin1", "Cakes"));
         recipes.add(new Recipe(2, "Vanilla Cookies", "Flour, Sugar, Vanilla", "Mix and bake", "user1", "Cookies"));
         recipes.add(new Recipe(3, "Strawberry Cheesecake", "Cream cheese, Strawberries, Graham crackers", "Mix, layer, and chill", "owner1", "Cakes"));
@@ -1065,12 +1073,86 @@ public class sweetSys {
     {
         this.msg = message;
     }
-    
-    
-    
+
+
+    //FOR MESSAGING SYSTEM
+    public String checkRecipient(String recipient) {
+        User userx = new User();
+        userx.setRole(recipient);
+        return userx.getRole();
+    }
+
+
+    public boolean receivedCheck(User u1) {
+        if (u1.getRole().equals("admin") || u1.getRole().equals("supplier")) {
+            return true;
+        }
+        return false;
+    }
+
+    //ORDERS MANAGEMENT
+    public String orderSupervisor(String sup) {
+        for (Order order : orders) {
+            if (order.getSupervisor().equals(sup)) {
+                return order.getSupervisor();
+            }
+        }
+        return null;
+    }
+
+    public boolean orderStateIsProcessed(String status) {
+        for (Order order : orders) {
+            if (order.getStatus().equals(status)) return true;
+        }
+        return false;
+    }
+
+    public String getOrderState(String status) {
+        for (Order order : orders) {
+            if (order.getStatus().equals(status)) return status;
+        }
+        return null;
+    }
+
+    public void updateOrder(String id, String oldState, String newState) {
+
+        for (Order order : orders) {
+            if (order.getId().equals(id)) {
+                Order x = new Order(order.getId(),order.getRecipient(),order.getPhone(),order.getAddress(),newState,order.getSupervisor());
+                orders.remove(order);
+                orders.add(x);
+
+//                    order.setStatus(newState);
+                break;
+            }
+        }
+
+    }
+
+    public String checkOrderState(String id) {
+        for (Order order : orders) {
+            if (order.getId().equals(id)) {
+
+                return order.getStatus();
+            }
+        }
+
+        return null;
+    }
+
+    public Order getOrderById(String id) {
+        for (Order order : orders) {
+            if (order.getId().equals(id)) {
+
+                return order;
+            }
+        }
+
+        return null;
+    }
+}
     
     
     
     
   
-}
