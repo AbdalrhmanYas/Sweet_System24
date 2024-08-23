@@ -10,7 +10,9 @@ public class sweetSys {
     private List<Recipe> recipes;
     private final List<Feedback> feedbacks;
     private final List<Product> products;
-    private  ArrayList<Order> orders;
+    private ArrayList<Order> orders;
+
+
 
     private final Map<String, List<Message>> userMessages;
 
@@ -86,6 +88,15 @@ public class sweetSys {
         System.out.println("Added recipe: " + glutenFreeCookies.getName());
 
         System.out.println("Total recipes initialized: " + recipes.size());
+
+
+        StoreOwner owner1 = (StoreOwner) getUserByUsername("owner1");
+        if (owner1 != null) {
+            owner1.addProduct(new Product(1, "Chocolate Cake", 10.0, 2, "owner1"));  // ID: 1, Name: Chocolate Cake, etc.
+            owner1.addProduct(new Product(2, "Strawberry Cheesecake", 50, 3, "owner1"));  // ID: 2, Name: Strawberry Cheesecake, etc.
+        }
+
+        addFundsToUser("user1", 50.0);
     }
 
 
@@ -153,6 +164,17 @@ public class sweetSys {
         if (user != null && user.getPassword().equals(oldPass)) {
             user.setPassword(newPass);
         }
+    }
+
+    //for tracking order in the store owner operations
+    public List<Order> getOrdersByOwner(String username) {
+        List<Order> ownerOrders = new ArrayList<>();
+        for (Order order : orders) {
+            if (order.getSupervisor().equals(username)) {
+                ownerOrders.add(order);
+            }
+        }
+        return ownerOrders;
     }
 
     public void login(String username, String password) {
@@ -1188,7 +1210,7 @@ public class sweetSys {
 
         for (Order order : orders) {
             if (order.getId().equals(id)) {
-                Order x = new Order(order.getId(),order.getRecipient(),order.getPhone(),order.getAddress(),newState,order.getSupervisor());
+                Order x = new Order(order.getId(), order.getRecipient(), order.getPhone(), order.getAddress(), newState, order.getSupervisor());
                 orders.remove(order);
                 orders.add(x);
 
