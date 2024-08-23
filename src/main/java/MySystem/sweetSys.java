@@ -1,103 +1,97 @@
 package MySystem;
 
-import io.cucumber.java.bs.A;
-
 import java.time.LocalDate;
 import java.util.*;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class sweetSys {
-    private ArrayList<User> users;
+    private final ArrayList<User> users;
     private List<Recipe> recipes;
-    private List<Feedback> feedbacks;
-    private List<Product> products;
-    
-    private Map<String, List<Message>> userMessages;
-    
-    private Map<String, List<Feedback>> productFeedback;
-
-    private PaymentSystem paymentSystem;
-    
-    private Map<String, List<String>> userOrderHistory;
-    
-    private Map<String, List<Feedback>> itemFeedback;
-
+    private final List<Feedback> feedbacks;
+    private final List<Product> products;
     private  ArrayList<Order> orders;
+
+    private final Map<String, List<Message>> userMessages;
+
+    private final Map<String, List<Feedback>> productFeedback;
+
+    private final PaymentSystem paymentSystem;
+
+    private final Map<String, List<String>> userOrderHistory;
+
+    private final Map<String, List<Feedback>> itemFeedback;
+
+
     private User currentUser;
-    
-    
+
+
     private boolean isLoggedIn;  // FOR LOGIN PROCESS AND I WILL USE IT WHILE TESTING LOGIN PROCESS
-    
-    
+
+
     private boolean isSignUpInProgress;    // FOR Signup PROCESS AND I WILL USE IT WHILE TESTING LOGUP PROCESS
-    
-    
+
+
     private boolean lastOperationSuccessful;  // FOR TESTING LOGIN & Signup
-    
-    
+
+
     private String msg;  // FOR LOGIN & Signup MESSAGES
-    
+
     private String lastGeneratedReport;
+    private StoreOwner storeowner;
 
     public sweetSys() {
+        orders = new ArrayList<>();
         users = new ArrayList<>();
         recipes = new ArrayList<>();
         feedbacks = new ArrayList<>();
         products = new ArrayList<>();
-        
+
         userMessages = new HashMap<>();
         productFeedback = new HashMap<>();
-        
+
         itemFeedback = new HashMap<>();
-        
-        paymentSystem= new PaymentSystem();
+
+        paymentSystem = new PaymentSystem();
         isLoggedIn = false;
         isSignUpInProgress = false;
         lastOperationSuccessful = false;
         msg = "";
         lastGeneratedReport = "";
         initializeUsersForTesting();
-        
-        initializeTestRecipesAndFeedback();  
-        
-        
+
+        initializeTestRecipesAndFeedback();
+
+
         userOrderHistory = new HashMap<>();
-        
-        
-        
-        
-        
-        
-        
-        
+
+
         recipes = new ArrayList<>();
         System.out.println("Initializing recipes:");
-        
+
         Recipe chocolateCake = new Recipe(1, "Chocolate Cake", "flour, sugar, cocoa powder, eggs, milk", "Mix and bake", "user1", "Cakes");
         chocolateCake.addDietaryRestriction("vegetarian");
         recipes.add(chocolateCake);
         System.out.println("Added recipe: " + chocolateCake.getName());
-        
+
         Recipe veganBrownies = new Recipe(2, "Vegan Brownies", "flour, sugar, cocoa powder, vegan butter, almond milk", "Mix and bake", "user2", "Brownies");
         veganBrownies.addDietaryRestriction("vegan");
         veganBrownies.addDietaryRestriction("dairy-free");
         recipes.add(veganBrownies);
         System.out.println("Added recipe: " + veganBrownies.getName());
-        
+
         Recipe glutenFreeCookies = new Recipe(3, "Gluten-Free Cookies", "gluten-free flour, sugar, butter, eggs", "Mix and bake", "user3", "Cookies");
         glutenFreeCookies.addDietaryRestriction("gluten-free");
         recipes.add(glutenFreeCookies);
         System.out.println("Added recipe: " + glutenFreeCookies.getName());
-        
+
         System.out.println("Total recipes initialized: " + recipes.size());
     }
 
 
-
-
     private void initializeUsersForTesting() {
         // Admins
+        users.add(new Admin("abood", "123456", "Nablus"));
         users.add(new Admin("admin1", "adminpass1", "Nablus"));
         users.add(new Admin("admin2", "adminpass2", "Jenin"));
         users.add(new Admin("admin3", "adminpass3", "Ramallah"));
@@ -128,16 +122,7 @@ public class sweetSys {
     }
 
 
-
-
-
-
-
-
-
     private void initializeTestRecipesAndFeedback() {
-
-
         orders.add(new Order("000", "Hamza", "0599888888", "Nablus", "Shipped", "owner"));
         orders.add(new Order("001", "Rami", "0599888888", "Nablus", "Delivered", "supplier"));
         orders.add(new Order("002", "Khaled", "0599888888", "Nablus", "Cancelled", "owner"));
@@ -148,28 +133,27 @@ public class sweetSys {
         recipes.add(new Recipe(2, "Vanilla Cookies", "Flour, Sugar, Vanilla", "Mix and bake", "user1", "Cookies"));
         recipes.add(new Recipe(3, "Strawberry Cheesecake", "Cream cheese, Strawberries, Graham crackers", "Mix, layer, and chill", "owner1", "Cakes"));
         recipes.add(new Recipe(4, "Lemon Tart", "Flour, Butter, Lemon", "Make crust, fill, and bake", "supplier1", "Tarts"));
-        
+
         feedbacks.add(new Feedback(1, "Great service!", "user1"));
         feedbacks.add(new Feedback(2, "Needs improvement", "user2"));
+
+
+        addFeedback("Great service! The desserts were delicious.", "user3");
+        addFeedback("The delivery was late, but the cake was worth the wait. Please improve delivery times.", "user4");
+        addFeedback("I love the new recipe feature! It's so helpful.", "user5");
     }
-    
-    
-    
-    
-    
-    
-    
+
+
     //    LOGIN AND Signup FUNCTIONS
     //-----------------------------------------------------------------------------------------------
-    public void changePass(String username, String oldPass, String newPass) {
 
+
+    public void changePass(String username, String oldPass, String newPass) {
         User user = getUserByUsername(username);
         if (user != null && user.getPassword().equals(oldPass)) {
             user.setPassword(newPass);
         }
     }
-
-
 
     public void login(String username, String password) {
         for (User user : users) {
@@ -188,43 +172,41 @@ public class sweetSys {
         msg = "Login failed. Please check your username and password.";
         System.out.println("Login failed for user: " + username);
     }
-    
-    
+
 
     public void logout() {
         this.isLoggedIn = false;
         currentUser = null;
         msg = "You have been logged out.";
     }
-    
-    
-    public boolean isLoggedIn() { return isLoggedIn; }  //RETURN THE VALUE OF THE FLAG 
-    
 
-    
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }  //RETURN THE VALUE OF THE FLAG
+
+
     public void startSignUp() {    // THIS IS FOR THE FIRST STEP OF TESTING SIGNUP SENARIO
         isSignUpInProgress = true;
     }
-    
-    
+
+
     public boolean signUpFlag() {    // TO RETURN THE VALUE OF isSignUpInProgress FLAG
-    	return isSignUpInProgress; 
-    	}
-    
-    
-    
+        return isSignUpInProgress;
+    }
+
+
     public void signUp(String username, String password, String role, String city) {
-    	
-    	
-    	
-        if (getUserByUsername(username) != null) {
+
+
+        if (getUserByUsername(username) != null) {  // check if the username is exist in the system
             lastOperationSuccessful = false;
             msg = "Username already exists";
             return;
         }
-        
-    // if the if statement failed i will make new user according to its role
-        
+
+        // if the if statement failed i will make new user according to its role
+
         User newUser;
         switch (role.toLowerCase()) {    // switch to determine the role of the new user
             case "admin":
@@ -237,10 +219,10 @@ public class sweetSys {
             case "store owner":
                 newUser = new StoreOwner(username, password, city);
                 break;
-                  
-  // For any other role out of ( admin , suppleir, owner or store owner ) then a generic User object is created.
+
+            // For any other role out of ( admin , suppleir, owner or store owner ) then a generic User object is created.
             default:
-                newUser = new User(username, password, role, city);  
+                newUser = new User(username, password, role, city);
         }
         users.add(newUser);
         lastOperationSuccessful = true;
@@ -250,12 +232,9 @@ public class sweetSys {
         isLoggedIn = true;
         System.out.println("New user created: " + newUser.getClass().getSimpleName() + " - " + username);
     }
-    
-    
-    
-    
-    
- //  to retrieve a user by username
+
+
+    //  to retrieve a user by username
     public User getUserByUsername(String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {        // call the getter from user class
@@ -265,22 +244,14 @@ public class sweetSys {
         return null;
     }
 
-    
-    
-    
-    public String getMessage() 
-    {
-    	return msg;
+
+    public String getMessage() {
+        return msg;
     }
-    
-    
-    
-    
-    
-    
-    
-   // this is relate to user account management feature file which i had programmed in loginlogupSteps 
-    
+
+
+    // this is relate to user account management feature file which i had programmed in loginlogupSteps
+
     public boolean updateUserDetails(String username, String newPassword, String newCity, String newEmail, String newPhoneNumber) {
         User user = getUserByUsername(username);
         if (user != null) {
@@ -293,16 +264,13 @@ public class sweetSys {
         lastOperationSuccessful = false;
         return false;
     }
-    
-    
+
+
 //------------------------------------------------------------------------------------------------
-    
-    
-    
-    
-    
- // ----------------------------------------------------------------------------------------------------------
- // Method to add a user to the system
+
+
+    // ----------------------------------------------------------------------------------------------------------
+    // Method to add a user to the system
     public void addUser(User user) {
         // Ensure the user doesn't already exist
         if (getUserByUsername(user.getUsername()) == null) {
@@ -312,12 +280,6 @@ public class sweetSys {
         }
     }
 
-    
-    
-    
-    
-
-    
 
     public Map<String, String> getUserDetails(String username) {
         User user = getUserByUsername(username);
@@ -336,15 +298,12 @@ public class sweetSys {
         lastOperationSuccessful = false;
         return null;
     }
-    
-    
-    
-    
-    
+
+
     // ----------------------------------------------------------------------------------------------------------
 
-    
-    // manage products 
+
+    // manage products
     //-----------------------------------------------------------------------------------------------
     public boolean addProduct(String username, Product product) {
         User user = getUserByUsername(username);
@@ -401,11 +360,11 @@ public class sweetSys {
         }
         return null;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     /*
     public boolean isProductInInventory(String productName) {
         return products.stream().anyMatch(p -> p.getName().equals(productName));
@@ -418,12 +377,11 @@ public class sweetSys {
                        .orElse(null);
     }
 */
-    
-    
-    
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------------------------------------------------------------------------
-//purchase products  
+//purchase products
 
     public void addFundsToUser(String username, double amount) {
         User user = getUserByUsername(username);
@@ -503,46 +461,40 @@ public class sweetSys {
     }
 
 
-
-
-    
-    
     public List<String> getUserOrderHistory(String username) {
         return userOrderHistory.getOrDefault(username, new ArrayList<>());
     }
 
 
 //--------------------------------------------------------------------------------------------------
-    
-    
-    
-    
-   
+
+
     //admin functions
-    
+
     public List<User> getAllUsers() {
         return new ArrayList<>(users);
     }
 
-    public List<User> getAllOwners(){
-        ArrayList <User> owners = new ArrayList<User>();
-        for (User u : users){
-            if (u.getRole().equals("owner")){
+    public List<User> getAllOwners() {
+        ArrayList<User> owners = new ArrayList<User>();
+        for (User u : users) {
+            if (u.getRole().equals("owner")) {
                 owners.add(u);
             }
         }
         return owners;
     }
 
-    public List<User> getAllSuppliers(){
-        ArrayList <User> suppliers = new ArrayList<User>();
-        for (User u : users){
-            if (u.getRole().equals("supplier")){
+    public List<User> getAllSuppliers() {
+        ArrayList<User> suppliers = new ArrayList<User>();
+        for (User u : users) {
+            if (u.getRole().equals("supplier")) {
                 suppliers.add(u);
             }
         }
         return suppliers;
     }
+
     public void updateUserRole(String username, String newRole) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {    // call the getter from user class
@@ -567,47 +519,105 @@ public class sweetSys {
         }
     }
 
+    // profits and reports and every thing related to admin management
+    //---------------------------------------------------------------------------------
 
+    public Map<String, Double> calculateProfits() {
+        Map<String, Double> profitBreakdown = new HashMap<>();
+        double totalRevenue = 0;
+        double totalCosts = 0;
+        double totalProfit = 0;
 
-    public String generateFinancialReport() {
-        double revenue = calculateRevenue();
-        double expenses = calculateExpenses();
-        double profit = revenue - expenses;
-
-        StringBuilder report = new StringBuilder();
-        report.append(String.format("Financial Report for %s:\n", LocalDate.now()));
-        report.append(String.format("Total Revenue: $%.2f\n", revenue));
-        report.append(String.format("Total Expenses: $%.2f\n", expenses));
-        report.append(String.format("Net Profit: $%.2f\n\n", profit));
-
-        report.append("Revenue Breakdown:\n");
-        report.append(String.format("Product Sales: $%.2f\n", calculateProductSalesRevenue()));
-        report.append(String.format("Recipe Sales: $%.2f\n", calculateRecipeSalesRevenue()));
-
-        report.append("\nExpense Breakdown:\n");
-        report.append(String.format("Cost of Goods Sold: $%.2f\n", calculateCOGS()));
-        report.append(String.format("Operational Expenses: $%.2f\n", calculateOperationalExpenses()));
-        report.append(String.format("Marketing Expenses: $%.2f\n", calculateMarketingExpenses()));
-
-        report.append("\nStore-wise Revenue:\n");
+        // Calculate revenue and costs for each store owner
         for (User user : users) {
             if (user instanceof StoreOwner) {
-                double storeRevenue = getStoreOwnerRevenue(user.getUsername());
-                report.append(String.format("%s: $%.2f\n", user.getUsername(), storeRevenue));
+                StoreOwner owner = (StoreOwner) user;
+                double storeRevenue = 0;
+                double storeCosts = 0;
+                for (Product product : owner.getInventory()) {
+                    storeRevenue += product.getPrice() * product.getSalesQuantity();
+                    storeCosts += product.getCost() * product.getSalesQuantity();
+                }
+                double storeProfit = storeRevenue - storeCosts;
+                profitBreakdown.put(owner.getUsername() + " Revenue", storeRevenue);
+                profitBreakdown.put(owner.getUsername() + " Costs", storeCosts);
+                profitBreakdown.put(owner.getUsername() + " Profit", storeProfit);
+                totalRevenue += storeRevenue;
+                totalCosts += storeCosts;
+                totalProfit += storeProfit;
             }
         }
 
-        report.append("\nTop Selling Products:\n");
-        getTopSellingProducts(5).forEach(product ->
-                report.append(String.format("%s: %d units, Revenue: $%.2f\n",
-                        product.getName(), product.getSalesQuantity(), product.getRevenue()))
-        );
+        // Add totals to the breakdown
+        profitBreakdown.put("Total Revenue", totalRevenue);
+        profitBreakdown.put("Total Costs", totalCosts);
+        profitBreakdown.put("Total Profit", totalProfit);
 
-        lastGeneratedReport = report.toString();
-        msg = "Financial report generated successfully.";
-        lastOperationSuccessful = true;
-        return lastGeneratedReport;
+        // Calculate profit margin
+        double profitMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
+        profitBreakdown.put("Profit Margin (%)", profitMargin);
+
+        return profitBreakdown;
     }
+
+
+    public String generateFinancialReport() {
+        StringBuilder report = new StringBuilder();
+        Map<String, Double> profitData = calculateProfits();
+
+        report.append("===== Financial Report =====\n");
+        report.append(String.format("Date: %s\n\n", LocalDate.now()));
+
+        // Overall Summary
+        report.append("1. Overall Financial Summary\n");
+        report.append(String.format("   Total Revenue: $%.2f\n", profitData.get("Total Revenue")));
+        report.append(String.format("   Total Expenses: $%.2f\n", profitData.get("Total Costs"))); // Changed to "Expenses"
+        report.append(String.format("   Total Profit: $%.2f\n", profitData.get("Total Profit")));
+        report.append(String.format("   Profit Margin: %.2f%%\n\n", profitData.get("Profit Margin (%)")));
+
+        this.lastGeneratedReport = report.toString();
+
+
+        // Store-wise Breakdown
+        report.append("2. Store-wise Financial Breakdown\n");
+        for (User user : users) {
+            if (user instanceof StoreOwner) {
+                StoreOwner owner = (StoreOwner) user;
+                report.append(String.format("   Store: %s\n", owner.getUsername()));
+                report.append(String.format("     Revenue: $%.2f\n", profitData.get(owner.getUsername() + " Revenue")));
+                report.append(String.format("     Costs: $%.2f\n", profitData.get(owner.getUsername() + " Costs")));
+                report.append(String.format("     Profit: $%.2f\n", profitData.get(owner.getUsername() + " Profit")));
+                double storeMargin = profitData.get(owner.getUsername() + " Revenue") > 0 ?
+                        (profitData.get(owner.getUsername() + " Profit") / profitData.get(owner.getUsername() + " Revenue")) * 100 : 0;
+                report.append(String.format("     Profit Margin: %.2f%%\n\n", storeMargin));
+            }
+        }
+
+        // Top Selling Products
+        report.append("3. Top Selling Products\n");
+        Map<String, List<Product>> bestSellers = getBestSellingProductss();
+        for (Map.Entry<String, List<Product>> entry : bestSellers.entrySet()) {
+            report.append(String.format("   Store: %s\n", entry.getKey()));
+            List<Product> products = entry.getValue();
+            for (int i = 0; i < products.size(); i++) {
+                Product product = products.get(i);
+                report.append(String.format("     %d. %s - Sold: %d, Revenue: $%.2f\n",
+                        i + 1, product.getName(), product.getSalesQuantity(), product.getRevenue()));
+            }
+            report.append("\n");
+        }
+
+        // Sales Trend (placeholder for future implementation)
+        report.append("4. Sales Trend\n");
+        report.append("   Sales trend analysis is not available in this version.\n\n");
+
+        // Recommendations (placeholder for future implementation)
+        report.append("5. Recommendations\n");
+        report.append("   Automated recommendations are not available in this version.\n");
+
+        return report.toString();
+    }
+
 
     private double calculateProductSalesRevenue() {
         return users.stream()
@@ -647,7 +657,6 @@ public class sweetSys {
         lastOperationSuccessful = true;
         return lastGeneratedReport;
     }
-
 
 
     private double calculateRevenue() {
@@ -741,8 +750,8 @@ public class sweetSys {
         lastOperationSuccessful = true;
         return bestSellers;
     }
-    
-    
+
+
     public Map<String, Double> getSalesReport(String ownerUsername) {
         User user = getUserByUsername(ownerUsername);
         if (user instanceof StoreOwner) {
@@ -764,12 +773,14 @@ public class sweetSys {
         return null;
     }
 
+
+    //----------------------------------------------------------------------------------
     public String getBestSellingProduct(String ownerUsername) {
         User user = getUserByUsername(ownerUsername);
         if (user instanceof StoreOwner) {
             StoreOwner owner = (StoreOwner) user;
             Optional<Product> bestSeller = owner.getInventory().stream()
-                .max(Comparator.comparingInt(Product::getSalesQuantity));
+                    .max(Comparator.comparingInt(Product::getSalesQuantity));
             if (bestSeller.isPresent()) {
                 msg = "Best-selling product identified successfully.";
                 lastOperationSuccessful = true;
@@ -780,6 +791,40 @@ public class sweetSys {
         lastOperationSuccessful = false;
         return null;
     }
+
+
+    // for main
+    public Map<String, List<Map<String, Object>>> identifyBestSellingProducts(int topN) {
+        Map<String, List<Map<String, Object>>> bestSellingProducts = new HashMap<>();
+
+        for (User user : users) {
+            if (user instanceof StoreOwner) {
+                StoreOwner owner = (StoreOwner) user;
+                List<Product> storeProducts = owner.getInventory();
+
+                // Sort products by sales quantity in descending order
+                storeProducts.sort((p1, p2) -> Integer.compare(p2.getSalesQuantity(), p1.getSalesQuantity()));
+
+                List<Map<String, Object>> topProducts = new ArrayList<>();
+                for (int i = 0; i < Math.min(topN, storeProducts.size()); i++) {
+                    Product product = storeProducts.get(i);
+                    Map<String, Object> productInfo = new HashMap<>();
+                    productInfo.put("name", product.getName());
+                    productInfo.put("salesQuantity", product.getSalesQuantity());
+                    productInfo.put("revenue", product.getRevenue());
+                    productInfo.put("profitMargin", (product.getRevenue() - (product.getCost() * product.getSalesQuantity())) / product.getRevenue() * 100);
+                    topProducts.add(productInfo);
+                }
+
+                bestSellingProducts.put(owner.getUsername(), topProducts);
+            }
+        }
+
+        return bestSellingProducts;
+    }
+
+
+    // ----------------------------------------------------------------------------------------------------
 
     public Map<String, Double> getProfitReport(String ownerUsername) {
         User user = getUserByUsername(ownerUsername);
@@ -798,32 +843,25 @@ public class sweetSys {
         lastOperationSuccessful = false;
         return null;
     }
-    
-    
-    
-    
-    
+
 
     public Map<String, Integer> getUserStatisticsByCity() {
-        Map<String, Integer> statistics = new HashMap<>();
+        Map<String, Integer> cityStats = new HashMap<>();
+
         for (User user : users) {
             String city = user.getCity();
             if (city != null && !city.isEmpty()) {
-                statistics.put(city, statistics.getOrDefault(city, 0) + 1);
+                cityStats.put(city, cityStats.getOrDefault(city, 0) + 1);
             }
         }
-        return statistics;
-    }
-    
-    
 
-    
+        return cityStats;
+    }
+
+
     //------------------------------------------------------------------------------------
     //recipes
-    
-    
-    
-    
+
 
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
@@ -842,9 +880,17 @@ public class sweetSys {
         }
         return removed;
     }
-    
-    
-    
+
+
+    public Recipe getRecipeById(int recipeId) {
+        return recipes.stream()
+                .filter(recipe -> recipe.getId() == recipeId)
+                .findFirst()
+                .orElse(null);
+    }
+
+
+
    /* public List<Recipe> searchRecipes(String keyword) {
         System.out.println("Searching for recipes containing: " + keyword);
         System.out.println("Total recipes before search: " + recipes.size());
@@ -862,10 +908,10 @@ public class sweetSys {
         System.out.println(message);
         return results;
     }*/
-    
-    
-    // saerch for recipe 
-    
+
+
+    // saerch for recipe
+
     public List<Recipe> searchRecipes(String keyword) {
         System.out.println("Searching for recipes containing: " + keyword);
         System.out.println("Total recipes before search: " + recipes.size());
@@ -873,8 +919,8 @@ public class sweetSys {
         for (Recipe recipe : recipes) {
             System.out.println("Checking recipe: " + recipe.getName());
             if (recipe.getName().toLowerCase().contains(keyword.toLowerCase()) ||
-                recipe.getIngredients().toLowerCase().contains(keyword.toLowerCase()) ||
-                recipe.getCategory().toLowerCase().contains(keyword.toLowerCase())) {
+                    recipe.getIngredients().toLowerCase().contains(keyword.toLowerCase()) ||
+                    recipe.getCategory().toLowerCase().contains(keyword.toLowerCase())) {
                 results.add(recipe);
                 System.out.println("Match found: " + recipe.getName());
             }
@@ -882,8 +928,8 @@ public class sweetSys {
         System.out.println("Search completed. Found " + results.size() + " recipes.");
         return results;
     }
-    
-    
+
+
     // browsing according to category
     public List<Recipe> browseRecipes(String category) {
         List<Recipe> results = new ArrayList<>();
@@ -896,12 +942,8 @@ public class sweetSys {
         lastOperationSuccessful = true;
         return results;
     }
-    
-    
-    
-    
-    
-    
+
+
     public List<Recipe> filterRecipesByDiet(String dietaryRestriction) {
         List<Recipe> results = new ArrayList<>();
         for (Recipe recipe : recipes) {
@@ -913,8 +955,7 @@ public class sweetSys {
         lastOperationSuccessful = true;
         return results;
     }
-    
-    
+
 
     public List<Recipe> filterRecipesByAllergy(String allergen) {
         List<Recipe> results = new ArrayList<>();
@@ -927,15 +968,14 @@ public class sweetSys {
         lastOperationSuccessful = true;
         return results;
     }
-    
-    
+
 
     public List<Recipe> searchRecipesWithDietaryFilter(String keyword, String dietaryRestriction) {
         List<Recipe> results = new ArrayList<>();
         for (Recipe recipe : recipes) {
             if (recipe.getDietaryRestrictions().contains(dietaryRestriction) &&
-                (recipe.getName().toLowerCase().contains(keyword.toLowerCase()) ||
-                 recipe.getIngredients().toLowerCase().contains(keyword.toLowerCase()))) {
+                    (recipe.getName().toLowerCase().contains(keyword.toLowerCase()) ||
+                            recipe.getIngredients().toLowerCase().contains(keyword.toLowerCase()))) {
                 results.add(recipe);
             }
         }
@@ -943,25 +983,20 @@ public class sweetSys {
         lastOperationSuccessful = true;
         return results;
     }
-    
-    
-    
-    
-    
+
+
     //getter
-    
-    public List<Recipe> getAllRecipes()
-    {
+
+    public List<Recipe> getAllRecipes() {
         return new ArrayList<>(recipes);
     }
-    
-    
-    
+
+
     // for feedback
-    
+
     //--------------------------------------------------------------------------------------------------
-    
-    
+
+
     public boolean sendMessage(String senderUsername, String recipientUsername, String content) {
         User sender = getUserByUsername(senderUsername);
         User recipient = getUserByUsername(recipientUsername);
@@ -1008,23 +1043,26 @@ public class sweetSys {
         }
         return null;
     }
-    
-    
-    
+
 
     public List<Feedback> getProductFeedback(String productName) {
         return productFeedback.getOrDefault(productName, new ArrayList<>());
     }
 
+
     public List<Feedback> getAllFeedback() {
         return new ArrayList<>(feedbacks);
     }
 
-    public void addFeedback(Feedback feedback) {
-        feedbacks.add(feedback);
+
+    public void addFeedback(String content, String author) {
+        int newId = feedbacks.size() + 1; // Simple ID generation
+        Feedback newFeedback = new Feedback(newId, content, author);
+        feedbacks.add(newFeedback);
         msg = "Feedback added successfully.";
         lastOperationSuccessful = true;
     }
+
 
     public void resolveFeedback(int feedbackId) {
         for (Feedback feedback : feedbacks) {
@@ -1041,10 +1079,11 @@ public class sweetSys {
 
     public Feedback getFeedbackById(int feedbackId) {
         return feedbacks.stream()
-                        .filter(f -> f.getId() == feedbackId)
-                        .findFirst()
-                        .orElse(null);
+                .filter(f -> f.getId() == feedbackId)
+                .findFirst()
+                .orElse(null);
     }
+
 
     // Product management
     public void addProduct(Product product) {
@@ -1053,28 +1092,59 @@ public class sweetSys {
         lastOperationSuccessful = true;
     }
 
-  
-    
-    // Getters
-   
-    
-    public boolean isLastOperationSuccessful() 
-    { 
-    	return lastOperationSuccessful;
-    }
-   
-    public User getCurrentUser() 
-    {
-    	return currentUser; 
+
+    public boolean setProductDiscount(String ownerUsername, String productName, double discountPercentage, LocalDate startDate, LocalDate endDate) {
+        User user = getUserByUsername(ownerUsername);
+        if (user instanceof StoreOwner) {
+            StoreOwner owner = (StoreOwner) user;
+            Product product = owner.getProductByName(productName);
+            if (product != null) {
+                product.setDiscount(discountPercentage, startDate, endDate);
+                msg = "Discount applied successfully.";
+                lastOperationSuccessful = true;
+                return true;
+            }
+        }
+        msg = "Failed to apply discount. Product not found or user is not a store owner.";
+        lastOperationSuccessful = false;
+        return false;
     }
 
-    
-    public void setMessage(String message) 
-    {
+    public boolean removeProductDiscount(String ownerUsername, String productName) {
+        User user = getUserByUsername(ownerUsername);
+        if (user instanceof StoreOwner) {
+            StoreOwner owner = (StoreOwner) user;
+            Product product = owner.getProductByName(productName);
+            if (product != null) {
+                product.removeDiscount();
+                msg = "Discount removed successfully.";
+                lastOperationSuccessful = true;
+                return true;
+            }
+        }
+        msg = "Failed to remove discount. Product not found or user is not a store owner.";
+        lastOperationSuccessful = false;
+        return false;
+    }
+
+
+    // Getters
+
+
+    public boolean isLastOperationSuccessful() {
+        return lastOperationSuccessful;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+
+    public void setMessage(String message) {
         this.msg = message;
     }
 
-
+    // motasem
     //FOR MESSAGING SYSTEM
     public String checkRecipient(String recipient) {
         User userx = new User();
@@ -1151,8 +1221,3 @@ public class sweetSys {
         return null;
     }
 }
-    
-    
-    
-    
-  
