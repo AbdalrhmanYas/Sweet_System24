@@ -48,7 +48,9 @@ public class Product {
                 !discountStartDate.isEqual(discountEndDate);
     }
 
-
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
 
     public double getDiscountedPrice() {
         if (isDiscountActive()) {
