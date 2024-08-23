@@ -112,6 +112,7 @@ public class sweetSys {
         users.add(new Supplier("supplier5", "supplierpass5", "Bethlehem"));
 
         // Store Owners
+        users.add(new StoreOwner("storeowner_x", "storeowner2", "Nablus"));
         users.add(new StoreOwner("owner1", "ownerpass1", "Nablus"));
         users.add(new StoreOwner("owner2", "ownerpass2", "Jenin"));
         users.add(new StoreOwner("owner3", "ownerpass3", "Ramallah"));
@@ -152,8 +153,15 @@ public class sweetSys {
     
     //    LOGIN AND Signup FUNCTIONS
     //-----------------------------------------------------------------------------------------------
+    public void changePass(String username, String oldPass, String newPass) {
 
-    
+        User user = getUserByUsername(username);
+        if (user != null && user.getPassword().equals(oldPass)) {
+            user.setPassword(newPass);
+        }
+    }
+
+
 
     public void login(String username, String password) {
         for (User user : users) {
