@@ -194,15 +194,7 @@ public class sweetSys {
     }
 
     //for tracking order in the store owner operations
-    public List<Order> getOrdersByOwner(String username) {
-        List<Order> ownerOrders = new ArrayList<>();
-        for (Order order : orders) {
-            if (order.getSupervisor().equals(username)) {
-                ownerOrders.add(order);
-            }
-        }
-        return ownerOrders;
-    }
+
 
     public void login(String username, String password) {
         for (User user : users) {
@@ -430,9 +422,7 @@ public class sweetSys {
         }
     }
 
-    public double getUserBalance(String username) {
-        return paymentSystem.getBalance(username);
-    }
+
 
     public void purchaseProduct(String buyerUsername, String sellerUsername, String productName) {
         User buyer = getUserByUsername(buyerUsername);
@@ -470,30 +460,7 @@ public class sweetSys {
         }
     }
 
-    public Optional<Map<String, Object>> getProductDetails(String productName) {
-        Product product = getProductByName(productName);
-        if (product != null) {
-            Map<String, Object> details = new HashMap<>();
-            details.put("name", product.getName());
-            details.put("price", product.getPrice());
-            details.put("quantity", product.getQuantity());
-            details.put("store", product.getStore());
-            return Optional.of(details);
-        }
-        return Optional.empty();
-    }
 
-    // New method to get store owner's revenue
-    public double getStoreOwnerRevenue(String username) {
-        User user = getUserByUsername(username);
-        if (user instanceof StoreOwner) {
-            StoreOwner owner = (StoreOwner) user;
-            return owner.getInventory().stream()
-                    .mapToDouble(Product::getRevenue)
-                    .sum();
-        }
-        return 0.0;
-    }
 
 
     public List<String> getUserOrderHistory(String username) {
@@ -510,25 +477,7 @@ public class sweetSys {
         return new ArrayList<>(users);
     }
 
-    public List<User> getAllOwners() {
-        ArrayList<User> owners = new ArrayList<>();
-        for (User u : users) {
-            if (u.getRole().equals(ER)) {
-                owners.add(u);
-            }
-        }
-        return owners;
-    }
 
-    public List<User> getAllSuppliers() {
-        ArrayList<User> suppliers = new ArrayList<>();
-        for (User u : users) {
-            if (u.getRole().equals(SU)) {
-                suppliers.add(u);
-            }
-        }
-        return suppliers;
-    }
 
     public void updateUserRole(String username, String newRole) {
         for (User user : users) {
@@ -730,34 +679,6 @@ public class sweetSys {
 
 
     // for main
-    public Map<String, List<Map<String, Object>>> identifyBestSellingProducts(int topN) {
-        Map<String, List<Map<String, Object>>> bestSellingProducts = new HashMap<>();
-
-        for (User user : users) {
-            if (user instanceof StoreOwner) {
-                StoreOwner owner = (StoreOwner) user;
-                List<Product> storeProducts = owner.getInventory();
-
-                // Sort products by sales quantity in descending order
-                storeProducts.sort((p1, p2) -> Integer.compare(p2.getSalesQuantity(), p1.getSalesQuantity()));
-
-                List<Map<String, Object>> topProducts = new ArrayList<>();
-                for (int i = 0; i < Math.min(topN, storeProducts.size()); i++) {
-                    Product product = storeProducts.get(i);
-                    Map<String, Object> productInfo = new HashMap<>();
-                    productInfo.put("name", product.getName());
-                    productInfo.put("salesQuantity", product.getSalesQuantity());
-                    productInfo.put("revenue", product.getRevenue());
-                    productInfo.put("profitMargin", (product.getRevenue() - (product.getCost() * product.getSalesQuantity())) / product.getRevenue() * 100);
-                    topProducts.add(productInfo);
-                }
-
-                bestSellingProducts.put(owner.getUsername(), topProducts);
-            }
-        }
-
-        return bestSellingProducts;
-    }
 
 
     // ----------------------------------------------------------------------------------------------------
@@ -818,12 +739,7 @@ public class sweetSys {
     }
 
 
-    public Recipe getRecipeById(int recipeId) {
-        return recipes.stream()
-                .filter(recipe -> recipe.getId() == recipeId)
-                .findFirst()
-                .orElse(null);
-    }
+
 
 
 
@@ -991,13 +907,6 @@ public class sweetSys {
                 .orElse(null);
     }
 
-
-    // Product management
-    public void addProduct(Product product) {
-        products.add(product);
-        msg = "Product added successfully.";
-        lastOperationSuccessful = true;
-    }
 
 
 

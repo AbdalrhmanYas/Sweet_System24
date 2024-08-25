@@ -10,10 +10,6 @@ public class User {
     
     // حاليا مش مستخدممم بس لاحقا بجوز استخدمهم اذا لحقت تكمل
     protected String businessName;
-    protected String contactEmail;
-    protected String contactPhone;
-    protected String businessAddress;
-    protected String businessDescription;
 
     // Constructor
     public User(String username, String password, String role, String city) {
@@ -37,10 +33,7 @@ public class User {
     
     // هاظ الكونستركتر راح يفيدني لما اعمل الفيتشر الثالثة في البارت الثاني 
     
-    public User(String username, String password, String role, String city, String businessName) {
-        this(username, password, role, city);
-        this.businessName = businessName;
-    }
+
 
  // Getters and setters
     public String getUsername() { return username; }
