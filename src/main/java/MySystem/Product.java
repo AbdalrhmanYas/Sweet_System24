@@ -93,14 +93,9 @@ public class Product {
 
 
     private double cost; // Cost price of the product
-    private int purchaseCount; // Number of times the recipe has been purchased
 
     public double getCost() { return cost; }
     public void setCost(double cost) { this.cost = cost; }
-
-    public int getPurchaseCount() { return purchaseCount; }
-    public void incrementPurchaseCount() { this.purchaseCount++; }
-
 
 
 
