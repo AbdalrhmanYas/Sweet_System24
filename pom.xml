@@ -92,6 +92,10 @@
             </plugin>
         </plugins>
     </build>
+    <properties>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+    </properties>
+
 
     <!--    <build>-->
 <!--        <plugins>-->
