@@ -506,7 +506,7 @@ public class sweetSys {
     }
 
     public List<User> getAllOwners() {
-        ArrayList<User> owners = new ArrayList<User>();
+        ArrayList<User> owners = new ArrayList<>();
         for (User u : users) {
             if (u.getRole().equals(ER)) {
                 owners.add(u);
@@ -516,7 +516,7 @@ public class sweetSys {
     }
 
     public List<User> getAllSuppliers() {
-        ArrayList<User> suppliers = new ArrayList<User>();
+        ArrayList<User> suppliers = new ArrayList<>();
         for (User u : users) {
             if (u.getRole().equals(SU)) {
                 suppliers.add(u);
@@ -663,36 +663,6 @@ public class sweetSys {
 
 
 
-
-    private double calculateCOGS() {
-        return users.stream()
-                .filter(StoreOwner.class::isInstance)
-                .map(StoreOwner.class::cast)
-                .flatMap(owner -> owner.getInventory().stream())
-                .mapToDouble(product -> product.getCost() * product.getSalesQuantity())
-                .sum();
-    }
-
-    private double calculateOperationalExpenses() {
-        // This is a simplified calculation. In a real system, you'd have more detailed data.
-        double baseOperationalCost = 5000; // Monthly base cost
-        double perUserCost = 0.5; // Cost per user
-        double perTransactionCost = 0.1; // Cost per transaction
-
-        int totalUsers = users.size();
-        int totalTransactions = userOrderHistory.values().stream()
-                .mapToInt(List::size)
-                .sum();
-
-        return baseOperationalCost + (perUserCost * totalUsers) + (perTransactionCost * totalTransactions);
-    }
-
-    private double calculateMarketingExpenses() {
-        // This is a placeholder. In a real system, you'd track actual marketing expenses.
-        return 1000; // Monthly marketing budget
-    }
-
- 
 
     public Map<String, List<Product>> getBestSellingProductss() {
         Map<String, List<Product>> bestSellers = new HashMap<>();
