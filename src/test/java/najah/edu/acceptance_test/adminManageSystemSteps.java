@@ -9,13 +9,13 @@ import java.util.logging.Logger;
 public class adminManageSystemSteps {
 
     private sweetSys sweetSys;
-    private Admin admin;
+
     private List<User> userList;
     private Map<String, List<Product>> bestSellingProducts;
     private Map<String, Integer> userStatistics;
     private List<Recipe> recipes;
     private List<Feedback> feedbackList;
-    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
+
 
     public adminManageSystemSteps() {
         this.sweetSys = new sweetSys(); // dependenct injection before each test

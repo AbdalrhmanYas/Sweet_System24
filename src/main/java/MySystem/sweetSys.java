@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 
+
 public class sweetSys {
     private final ArrayList<User> users;
     private List<Recipe> recipes;
@@ -339,7 +340,7 @@ public class sweetSys {
         }
         msg = WB;
         lastOperationSuccessful = false;
-        return null;
+        return Collections.emptyMap();
     }
 
 
@@ -608,55 +609,55 @@ public class sweetSys {
         StringBuilder report = new StringBuilder();
         Map<String, Double> profitData = calculateProfits();
 
-        report.append("===== Financial Report =====\n");
-        report.append(String.format("Date: %s\n\n", LocalDate.now()));
+        report.append("===== Financial Report =====%n");
+        report.append(String.format("Date: %s%n%n", LocalDate.now()));
 
         // Overall Summary
-        report.append("1. Overall Financial Summary\n");
-        report.append(String.format("   Total Revenue: $%.2f\n", profitData.get(WS)));
-        report.append(String.format("   Total Expenses: $%.2f\n", profitData.get("Total Costs"))); // Changed to "Expenses"
-        report.append(String.format("   Total Profit: $%.2f\n", profitData.get("Total Profit")));
-        report.append(String.format("   Profit Margin: %.2f%%\n\n", profitData.get("Profit Margin (%)")));
+        report.append("1. Overall Financial Summary%n");
+        report.append(String.format("   Total Revenue: $%.2f%n", profitData.get(WS)));
+        report.append(String.format("   Total Expenses: $%.2f%n", profitData.get("Total Costs"))); // Changed to "Expenses"
+        report.append(String.format("   Total Profit: $%.2f%n", profitData.get("Total Profit")));
+        report.append(String.format("   Profit Margin: %.2f%%%n%n", profitData.get("Profit Margin (%)")));
 
         this.lastGeneratedReport = report.toString();
 
 
         // Store-wise Breakdown
-        report.append("2. Store-wise Financial Breakdown\n");
+        report.append("2. Store-wise Financial Breakdown%n");
         for (User user : users) {
             if (user instanceof StoreOwner) {
                 StoreOwner owner = (StoreOwner) user;
-                report.append(String.format("   Store: %s\n", owner.getUsername()));
-                report.append(String.format("     Revenue: $%.2f\n", profitData.get(owner.getUsername() + WT)));
-                report.append(String.format("     Costs: $%.2f\n", profitData.get(owner.getUsername() + " Costs")));
-                report.append(String.format("     Profit: $%.2f\n", profitData.get(owner.getUsername() + WR)));
+                report.append(String.format("   Store: %s%n", owner.getUsername()));
+                report.append(String.format("     Revenue: $%.2f%n", profitData.get(owner.getUsername() + WT)));
+                report.append(String.format("     Costs: $%.2f%n", profitData.get(owner.getUsername() + " Costs")));
+                report.append(String.format("     Profit: $%.2f%n", profitData.get(owner.getUsername() + WR)));
                 double storeMargin = profitData.get(owner.getUsername() + WT) > 0 ?
                         (profitData.get(owner.getUsername() + WR) / profitData.get(owner.getUsername() + WT)) * 100 : 0;
-                report.append(String.format("     Profit Margin: %.2f%%\n\n", storeMargin));
+                report.append(String.format("     Profit Margin: %.2f%%%n%n", storeMargin));
             }
         }
 
         // Top Selling Products
-        report.append("3. Top Selling Products\n");
+        report.append("3. Top Selling Products%n");
         Map<String, List<Product>> bestSellers = getBestSellingProductss();
         for (Map.Entry<String, List<Product>> entry : bestSellers.entrySet()) {
             report.append(String.format("   Store: %s%n", entry.getKey()));
             List<Product> products = entry.getValue();
             for (int i = 0; i < products.size(); i++) {
                 Product product = products.get(i);
-                report.append(String.format("     %d. %s - Sold: %d, Revenue: $%.2f\n",
+                report.append(String.format("     %d. %s - Sold: %d, Revenue: $%.2f%n",
                         i + 1, product.getName(), product.getSalesQuantity(), product.getRevenue()));
             }
-            report.append("\n");
+            report.append("%n");
         }
 
         // Sales Trend (placeholder for future implementation)
-        report.append("4. Sales Trend\n");
-        report.append("   Sales trend analysis is not available in this version.\n\n");
+        report.append("4. Sales Trend%n");
+        report.append("   Sales trend analysis is not available in this version.%n%n");
 
         // Recommendations (placeholder for future implementation)
-        report.append("5. Recommendations\n");
-        report.append("   Automated recommendations are not available in this version.\n");
+        report.append("5. Recommendations%n");
+        report.append("   Automated recommendations are not available in this version.%n");
 
         return report.toString();
     }
