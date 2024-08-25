@@ -43,7 +43,23 @@ public class sweetSys {
     private String lastGeneratedReport;
     private StoreOwner storeowner;
     static String I ="Added recipe: ";
-
+    static String O = "user1";
+    static String P = "Chocolate Cake";
+    static String Q = "Cakes";
+    static String R = "Mix and bake";
+    static String S = "user2";
+    static String T ="user3";
+    static String U ="owner1";
+    static String V = "Nablus";
+    static String W = "Jenin";
+    static String X ="Ramallah";
+    static String Y = "Hebron";
+    static String Z = "Bethlehem";
+    static String z ="regular";
+    static String w ="User not found.";
+    static String t =" Revenue";
+    static String r =" Profit";
+    static String s ="Total Revenue";
     public sweetSys() {
         orders = new ArrayList<>();
         users = new ArrayList<>();
@@ -73,18 +89,18 @@ public class sweetSys {
         recipes = new ArrayList<>();
         logger.info("Initializing recipes:");
 
-        Recipe chocolateCake = new Recipe(1, "Chocolate Cake", "flour, sugar, cocoa powder, eggs, milk", "Mix and bake", "user1", "Cakes");
+        Recipe chocolateCake = new Recipe(1, P, "flour, sugar, cocoa powder, eggs, milk", R, O, Q);
         chocolateCake.addDietaryRestriction("vegetarian");
         recipes.add(chocolateCake);
         logger.info(I + chocolateCake.getName());
 
-        Recipe veganBrownies = new Recipe(2, "Vegan Brownies", "flour, sugar, cocoa powder, vegan butter, almond milk", "Mix and bake", "user2", "Brownies");
+        Recipe veganBrownies = new Recipe(2, "Vegan Brownies", "flour, sugar, cocoa powder, vegan butter, almond milk", R, S, "Brownies");
         veganBrownies.addDietaryRestriction("vegan");
         veganBrownies.addDietaryRestriction("dairy-free");
         recipes.add(veganBrownies);
         logger.info(I + veganBrownies.getName());
 
-        Recipe glutenFreeCookies = new Recipe(3, "Gluten-Free Cookies", "gluten-free flour, sugar, butter, eggs", "Mix and bake", "user3", "Cookies");
+        Recipe glutenFreeCookies = new Recipe(3, "Gluten-Free Cookies", "gluten-free flour, sugar, butter, eggs", R, T, "Cookies");
         glutenFreeCookies.addDietaryRestriction("gluten-free");
         recipes.add(glutenFreeCookies);
         logger.info(I + glutenFreeCookies.getName());
@@ -92,66 +108,66 @@ public class sweetSys {
         logger.info("Total recipes initialized: " + recipes.size());
 
 
-        StoreOwner owner1 = (StoreOwner) getUserByUsername("owner1");
+        StoreOwner owner1 = (StoreOwner) getUserByUsername(U);
         if (owner1 != null) {
-            owner1.addProduct(new Product(1, "Chocolate Cake", 10.0, 2, "owner1"));  // ID: 1, Name: Chocolate Cake, etc.
-            owner1.addProduct(new Product(2, "Strawberry Cheesecake", 50, 3, "owner1"));  // ID: 2, Name: Strawberry Cheesecake, etc.
+            owner1.addProduct(new Product(1, P, 10.0, 2, U));  // ID: 1, Name: Chocolate Cake, etc.
+            owner1.addProduct(new Product(2, "Strawberry Cheesecake", 50, 3, U));  // ID: 2, Name: Strawberry Cheesecake, etc.
         }
 
-        addFundsToUser("user1", 50.0);
+        addFundsToUser(O, 50.0);
     }
 
 
     private void initializeUsersForTesting() {
         // Admins
-        users.add(new Admin("abood", "123456", "Nablus"));
-        users.add(new Admin("admin1", "adminpass1", "Nablus"));
-        users.add(new Admin("admin2", "adminpass2", "Jenin"));
-        users.add(new Admin("admin3", "adminpass3", "Ramallah"));
-        users.add(new Admin("admin4", "adminpass4", "Hebron"));
-        users.add(new Admin("admin5", "adminpass5", "Bethlehem"));
+        users.add(new Admin("abood", "123456", V));
+        users.add(new Admin("admin1", "adminpass1", V));
+        users.add(new Admin("admin2", "adminpass2", W));
+        users.add(new Admin("admin3", "adminpass3", X));
+        users.add(new Admin("admin4", "adminpass4", Y));
+        users.add(new Admin("admin5", "adminpass5", Z));
 
         // Suppliers
-        users.add(new Supplier("supplier1", "supplierpass1", "Nablus"));
-        users.add(new Supplier("supplier2", "supplierpass2", "Jenin"));
-        users.add(new Supplier("supplier3", "supplierpass3", "Ramallah"));
-        users.add(new Supplier("supplier4", "supplierpass4", "Hebron"));
-        users.add(new Supplier("supplier5", "supplierpass5", "Bethlehem"));
+        users.add(new Supplier("supplier1", "supplierpass1", V));
+        users.add(new Supplier("supplier2", "supplierpass2", W));
+        users.add(new Supplier("supplier3", "supplierpass3", X));
+        users.add(new Supplier("supplier4", "supplierpass4", Y));
+        users.add(new Supplier("supplier5", "supplierpass5", Z));
 
         // Store Owners
-        users.add(new StoreOwner("storeowner_x", "storeowner2", "Nablus"));
-        users.add(new StoreOwner("owner1", "ownerpass1", "Nablus"));
-        users.add(new StoreOwner("owner2", "ownerpass2", "Jenin"));
-        users.add(new StoreOwner("owner3", "ownerpass3", "Ramallah"));
-        users.add(new StoreOwner("owner4", "ownerpass4", "Hebron"));
-        users.add(new StoreOwner("owner5", "ownerpass5", "Bethlehem"));
+        users.add(new StoreOwner("storeowner_x", "storeowner2", V));
+        users.add(new StoreOwner(U, "ownerpass1", V));
+        users.add(new StoreOwner("owner2", "ownerpass2", W));
+        users.add(new StoreOwner("owner3", "ownerpass3", X));
+        users.add(new StoreOwner("owner4", "ownerpass4", Y));
+        users.add(new StoreOwner("owner5", "ownerpass5", Z));
 
         // Regular Users
-        users.add(new User("user1", "userpass1", "regular", "Nablus"));
-        users.add(new User("user2", "userpass2", "regular", "Jenin"));
-        users.add(new User("user3", "userpass3", "regular", "Ramallah"));
-        users.add(new User("user4", "userpass4", "regular", "Hebron"));
-        users.add(new User("user5", "userpass5", "regular", "Bethlehem"));
+        users.add(new User(O, "userpass1", z, V));
+        users.add(new User(S, "userpass2", z, W));
+        users.add(new User(T, "userpass3", z, X));
+        users.add(new User("user4", "userpass4", z, Y));
+        users.add(new User("user5", "userpass5", z, Z));
     }
 
 
     private void initializeTestRecipesAndFeedback() {
-        orders.add(new Order("000", "Hamza", "0599888888", "Nablus", "Shipped", "owner"));
-        orders.add(new Order("001", "Rami", "0599888888", "Nablus", "Delivered", "supplier"));
-        orders.add(new Order("002", "Khaled", "0599888888", "Nablus", "Cancelled", "owner"));
-        orders.add(new Order("003", "Ahmed", "0599888888", "Nablus", "In Progress", "supplier"));
+        orders.add(new Order("000", "Hamza", "0599888882", V, "Shipped", "owner"));
+        orders.add(new Order("001", "Rami", "0599888883", V, "Delivered", "supplier"));
+        orders.add(new Order("002", "Khaled", "0599888884", V, "Cancelled", "owner"));
+        orders.add(new Order("003", "Ahmed", "0599888885", V, "In Progress", "supplier"));
 
 
-        recipes.add(new Recipe(1, "Chocolate Cake", "Flour, Sugar, Cocoa", "Mix and bake", "admin1", "Cakes"));
-        recipes.add(new Recipe(2, "Vanilla Cookies", "Flour, Sugar, Vanilla", "Mix and bake", "user1", "Cookies"));
-        recipes.add(new Recipe(3, "Strawberry Cheesecake", "Cream cheese, Strawberries, Graham crackers", "Mix, layer, and chill", "owner1", "Cakes"));
+        recipes.add(new Recipe(1, P, "Flour, Sugar, Cocoa", R, "admin1", Q));
+        recipes.add(new Recipe(2, "Vanilla Cookies", "Flour, Sugar, Vanilla", R, O, "Cookies"));
+        recipes.add(new Recipe(3, "Strawberry Cheesecake", "Cream cheese, Strawberries, Graham crackers", "Mix, layer, and chill", U, Q));
         recipes.add(new Recipe(4, "Lemon Tart", "Flour, Butter, Lemon", "Make crust, fill, and bake", "supplier1", "Tarts"));
 
-        feedbacks.add(new Feedback(1, "Great service!", "user1"));
-        feedbacks.add(new Feedback(2, "Needs improvement", "user2"));
+        feedbacks.add(new Feedback(1, "Great service!", O));
+        feedbacks.add(new Feedback(2, "Needs improvement", S));
 
 
-        addFeedback("Great service! The desserts were delicious.", "user3");
+        addFeedback("Great service! The desserts were delicious.", T);
         addFeedback("The delivery was late, but the cake was worth the wait. Please improve delivery times.", "user4");
         addFeedback("I love the new recipe feature! It's so helpful.", "user5");
     }
@@ -284,7 +300,7 @@ public class sweetSys {
             lastOperationSuccessful = true;
             return true;
         }
-        msg = "User not found.";
+        msg = w;
         lastOperationSuccessful = false;
         return false;
     }
@@ -318,7 +334,7 @@ public class sweetSys {
             lastOperationSuccessful = true;
             return details;
         }
-        msg = "User not found.";
+        msg = w;
         lastOperationSuccessful = false;
         return null;
     }
@@ -414,7 +430,7 @@ public class sweetSys {
             msg = "Funds added successfully.";
             lastOperationSuccessful = true;
         } else {
-            msg = "User not found.";
+            msg = w;
             lastOperationSuccessful = false;
         }
     }
@@ -528,7 +544,7 @@ public class sweetSys {
                 return;
             }
         }
-        msg = "User not found.";
+        msg = w;
         lastOperationSuccessful = false;
     }
 
@@ -538,7 +554,7 @@ public class sweetSys {
             msg = "User deleted successfully.";
             lastOperationSuccessful = true;
         } else {
-            msg = "User not found.";
+            msg = w;
             lastOperationSuccessful = false;
         }
     }
@@ -563,9 +579,9 @@ public class sweetSys {
                     storeCosts += product.getCost() * product.getSalesQuantity();
                 }
                 double storeProfit = storeRevenue - storeCosts;
-                profitBreakdown.put(owner.getUsername() + " Revenue", storeRevenue);
+                profitBreakdown.put(owner.getUsername() + t, storeRevenue);
                 profitBreakdown.put(owner.getUsername() + " Costs", storeCosts);
-                profitBreakdown.put(owner.getUsername() + " Profit", storeProfit);
+                profitBreakdown.put(owner.getUsername() + r, storeProfit);
                 totalRevenue += storeRevenue;
                 totalCosts += storeCosts;
                 totalProfit += storeProfit;
@@ -573,7 +589,7 @@ public class sweetSys {
         }
 
         // Add totals to the breakdown
-        profitBreakdown.put("Total Revenue", totalRevenue);
+        profitBreakdown.put(s, totalRevenue);
         profitBreakdown.put("Total Costs", totalCosts);
         profitBreakdown.put("Total Profit", totalProfit);
 
@@ -594,7 +610,7 @@ public class sweetSys {
 
         // Overall Summary
         report.append("1. Overall Financial Summary\n");
-        report.append(String.format("   Total Revenue: $%.2f\n", profitData.get("Total Revenue")));
+        report.append(String.format("   Total Revenue: $%.2f\n", profitData.get(s)));
         report.append(String.format("   Total Expenses: $%.2f\n", profitData.get("Total Costs"))); // Changed to "Expenses"
         report.append(String.format("   Total Profit: $%.2f\n", profitData.get("Total Profit")));
         report.append(String.format("   Profit Margin: %.2f%%\n\n", profitData.get("Profit Margin (%)")));
@@ -608,11 +624,11 @@ public class sweetSys {
             if (user instanceof StoreOwner) {
                 StoreOwner owner = (StoreOwner) user;
                 report.append(String.format("   Store: %s\n", owner.getUsername()));
-                report.append(String.format("     Revenue: $%.2f\n", profitData.get(owner.getUsername() + " Revenue")));
+                report.append(String.format("     Revenue: $%.2f\n", profitData.get(owner.getUsername() + t)));
                 report.append(String.format("     Costs: $%.2f\n", profitData.get(owner.getUsername() + " Costs")));
-                report.append(String.format("     Profit: $%.2f\n", profitData.get(owner.getUsername() + " Profit")));
-                double storeMargin = profitData.get(owner.getUsername() + " Revenue") > 0 ?
-                        (profitData.get(owner.getUsername() + " Profit") / profitData.get(owner.getUsername() + " Revenue")) * 100 : 0;
+                report.append(String.format("     Profit: $%.2f\n", profitData.get(owner.getUsername() + r)));
+                double storeMargin = profitData.get(owner.getUsername() + t) > 0 ?
+                        (profitData.get(owner.getUsername() + r) / profitData.get(owner.getUsername() + t)) * 100 : 0;
                 report.append(String.format("     Profit Margin: %.2f%%\n\n", storeMargin));
             }
         }
@@ -787,7 +803,7 @@ public class sweetSys {
                 salesReport.put(product.getName(), productRevenue);
                 totalRevenue += productRevenue;
             }
-            salesReport.put("Total Revenue", totalRevenue);
+            salesReport.put(s, totalRevenue);
             msg = "Sales report generated successfully.";
             lastOperationSuccessful = true;
             return salesReport;
