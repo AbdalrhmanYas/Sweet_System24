@@ -97,13 +97,13 @@ public class sweetSys {
         recipes = new ArrayList<>();
         logger.info("Initializing recipes:");
 
-        Recipe chocolateCake = new Recipe(1, "Chocolate Cake", "flour, sugar, cocoa powder, eggs, milk", "Mix and bake", "user1", "Cakes");
+        Recipe chocolateCake = new Recipe(1, "Chocolate Cake", "flour, sugar, cocoa powder, eggs, milk", R, "user1", "Cakes");
         chocolateCake.addDietaryRestriction("vegetarian");
         recipes.add(chocolateCake);
         logAddedRecipe(chocolateCake);
 
         Recipe veganBrownies = new Recipe(2, "Vegan Brownies",
-                "flour, sugar, cocoa powder, vegan butter, almond milk", "Mix and bake", "user2", "Brownies");
+                "flour, sugar, cocoa powder, vegan butter, almond milk", R, "user2", "Brownies");
         veganBrownies.addDietaryRestriction("vegan");
         veganBrownies.addDietaryRestriction("dairy-free");
         recipes.add(veganBrownies);
