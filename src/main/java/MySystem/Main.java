@@ -14,6 +14,12 @@ import java.util.logging.Logger;
 public class Main {
     static String A = "Please enter your choice:";
     static String B = "Enter your choice: ";
+    static String C = "Invalid choice";
+    static String D ="Returning to User Dashboard...";
+    static String E ="\nAdditional Options:";
+    static String F = "3-) Return to Admin Dashboard";
+    static String G = "Invalid choice. Please try again.";
+    static String H ="Returning to Store Owner Dashboard...";
     private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
     public static void mainMenu() {
         logger.info("\n===== MAIN MENU =====");
@@ -160,7 +166,7 @@ public class Main {
                     break;
                 }
                 default: {
-                    logger.info("Invalid choice");
+                    logger.info(C);
                     break;
                 }
             }
@@ -232,11 +238,11 @@ public class Main {
                     break;
                 }
                 case 3: {
-                    logger.info("Returning to User Dashboard...");
+                    logger.info(D);
                     break;
                 }
                 default: {
-                    logger.info("Invalid choice");
+                    logger.info(C);
                     break;
                 }
             }
@@ -306,10 +312,10 @@ public class Main {
                     searchRecipesWithDietaryFilter(sc, s);
                     break;
                 case 7:
-                    logger.info("Returning to User Dashboard...");
+                    logger.info(D);
                     break;
                 default:
-                    logger.info("Invalid choice");
+                    logger.info(C);
                     break;
             }
         } while (choice != 7);
@@ -461,10 +467,10 @@ public class Main {
         // Offer additional options
         Scanner sc = new Scanner(System.in);
         while (true) {
-            logger.info("\nAdditional Options:");
+            logger.info(E);
             logger.info("1-) View profit trend");
             logger.info("2-) Analyze top-performing products");
-            logger.info("3-) Return to Admin Dashboard");
+            logger.info(F);
             System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -479,7 +485,7 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         }
     }
@@ -519,7 +525,7 @@ public class Main {
             logger.info("\nOptions:");
             logger.info("1-) Save report to file");
             logger.info("2-) Email report");
-            logger.info("3-) Return to Admin Dashboard");
+            logger.info(F);
             System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -534,7 +540,7 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         }
     }
@@ -596,10 +602,10 @@ public class Main {
 
         // Additional analysis options
         while (true) {
-            logger.info("\nAdditional Options:");
+            logger.info(E);
             logger.info("1-) Compare best-selling products across stores");
             logger.info("2-) Analyze product performance trends");
-            logger.info("3-) Return to Admin Dashboard");
+            logger.info(F);
             System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -614,7 +620,7 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         }
     }
@@ -683,7 +689,7 @@ public class Main {
         // Additional analysis options
         Scanner sc = new Scanner(System.in);
         while (true) {
-            logger.info("\nAdditional Options:");
+            logger.info(E);
             logger.info("1-) View city with most users");
             logger.info("2-) View city with least users");
             logger.info("3-) View percentage distribution");
@@ -705,7 +711,7 @@ public class Main {
                 case 4:
                     return;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         }
     }
@@ -747,7 +753,7 @@ public class Main {
             logger.info("\n===== Manage Shared Content =====");
             logger.info("1-) View all recipes");
             logger.info("2-) Delete a recipe");
-            logger.info("3-) Return to Admin Dashboard");
+            logger.info(F);
             System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -762,7 +768,7 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         }
     }
@@ -841,10 +847,10 @@ public class Main {
                 provideSharedRecipeFeedback(sc, s, user);
                 break;
             case 3:
-                logger.info("Returning to User Dashboard...");
+                logger.info(D);
                 break;
             default:
-                logger.info("Invalid choice");
+                logger.info(C);
         }
     }
 
@@ -929,7 +935,7 @@ public class Main {
             logger.info("\n===== Manage User Feedback =====");
             logger.info("1-) View all feedback");
             logger.info("2-) Mark feedback as resolved");
-            logger.info("3-) Return to Admin Dashboard");
+            logger.info(F);
             System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -944,7 +950,7 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         }
     }
@@ -1040,7 +1046,7 @@ public class Main {
                     break;
                 }
                 default: {
-                    logger.info("Invalid choice");
+                    logger.info(C);
                     break;
                 }
             }
@@ -1088,7 +1094,7 @@ public class Main {
                     break;
                 }
                 default: {
-                    logger.info("Invalid choice");
+                    logger.info(C);
                     break;
                 }
             }
@@ -1125,10 +1131,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                 viewAllProducts(s, owner);
                 break;
             case 5:
-                logger.info("Returning to Store Owner Dashboard...");
+                logger.info(H);
                 break;
             default:
-                logger.info("Invalid choice. Please try again.");
+                logger.info(G);
         }
     } while (choice != 5);
 }
@@ -1226,10 +1232,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     viewProfitReport(s, owner);
                     break;
                 case 3:
-                    logger.info("Returning to Store Owner Dashboard...");
+                    logger.info(H);
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 3);
     }
@@ -1310,10 +1316,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     viewAllDiscounts(s, owner);
                     break;
                 case 4:
-                    logger.info("Returning to Store Owner Dashboard...");
+                    logger.info(H);
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 4);
     }
@@ -1401,7 +1407,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     logger.info("Returning to Dashboard...");
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 3);
     }
@@ -1467,10 +1473,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     changeStoreOwnerPassword(sc, s, owner);
                     break;
                 case 2:
-                    logger.info("Returning to Store Owner Dashboard...");
+                    logger.info(H);
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 2);
     }
@@ -1512,10 +1518,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     updateOrderStatus(sc, s, owner);
                     break;
                 case 3:
-                    logger.info("Returning to Store Owner Dashboard...");
+                    logger.info(H);
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 3);
     }
@@ -1610,7 +1616,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     logger.info("Logging out from the Store Owner dashboard...");
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 8);
     }
@@ -1651,7 +1657,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     logger.info("Returning to Supplier Dashboard...");
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 5);
     }
@@ -1745,7 +1751,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     logger.info("Returning to Supplier Dashboard...");
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 2);
     }
@@ -1793,7 +1799,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     logger.info("Logging out from the Supplier dashboard...");
                     break;
                 default:
-                    logger.info("Invalid choice. Please try again.");
+                    logger.info(G);
             }
         } while (choice != 4);
     }

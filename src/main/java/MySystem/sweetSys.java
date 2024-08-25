@@ -42,6 +42,7 @@ public class sweetSys {
 
     private String lastGeneratedReport;
     private StoreOwner storeowner;
+    static String I ="Added recipe: ";
 
     public sweetSys() {
         orders = new ArrayList<>();
@@ -75,18 +76,18 @@ public class sweetSys {
         Recipe chocolateCake = new Recipe(1, "Chocolate Cake", "flour, sugar, cocoa powder, eggs, milk", "Mix and bake", "user1", "Cakes");
         chocolateCake.addDietaryRestriction("vegetarian");
         recipes.add(chocolateCake);
-        logger.info("Added recipe: " + chocolateCake.getName());
+        logger.info(I + chocolateCake.getName());
 
         Recipe veganBrownies = new Recipe(2, "Vegan Brownies", "flour, sugar, cocoa powder, vegan butter, almond milk", "Mix and bake", "user2", "Brownies");
         veganBrownies.addDietaryRestriction("vegan");
         veganBrownies.addDietaryRestriction("dairy-free");
         recipes.add(veganBrownies);
-        logger.info("Added recipe: " + veganBrownies.getName());
+        logger.info(I + veganBrownies.getName());
 
         Recipe glutenFreeCookies = new Recipe(3, "Gluten-Free Cookies", "gluten-free flour, sugar, butter, eggs", "Mix and bake", "user3", "Cookies");
         glutenFreeCookies.addDietaryRestriction("gluten-free");
         recipes.add(glutenFreeCookies);
-        logger.info("Added recipe: " + glutenFreeCookies.getName());
+        logger.info(I + glutenFreeCookies.getName());
 
         logger.info("Total recipes initialized: " + recipes.size());
 
