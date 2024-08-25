@@ -409,21 +409,7 @@ public class sweetSys {
 
 
 
-    /*
-    public boolean isProductInInventory(String productName) {
-        return products.stream().anyMatch(p -> p.getName().equals(productName));
-    }
 
-    public Product getProductByName(String productName) {
-        return products.stream()
-                       .filter(p -> p.getName().equals(productName))
-                       .findFirst()
-                       .orElse(null);
-    }
-*/
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------------------------------------------------------------------------
 //purchase products
 
@@ -642,9 +628,9 @@ public class sweetSys {
         Map<String, List<Product>> bestSellers = getBestSellingProductss();
         for (Map.Entry<String, List<Product>> entry : bestSellers.entrySet()) {
             report.append(String.format("   Store: %s%n", entry.getKey()));
-            List<Product> products = entry.getValue();
-            for (int i = 0; i < products.size(); i++) {
-                Product product = products.get(i);
+            List<Product> products2 = entry.getValue();
+            for (int i = 0; i < products2.size(); i++) {
+                Product product = products2.get(i);
                 report.append(String.format("     %d. %s - Sold: %d, Revenue: $%.2f%n",
                         i + 1, product.getName(), product.getSalesQuantity(), product.getRevenue()));
             }
@@ -706,26 +692,7 @@ public class sweetSys {
         return 1000; // Monthly marketing budget
     }
 
-    private double calculateExpenses() {
-        double totalExpenses = 0.0;
-
-        // Calculate cost of goods sold (COGS)
-        double cogs = calculateCOGS();
-        totalExpenses += cogs;
-
-        // Calculate operational expenses
-        double operationalExpenses = calculateOperationalExpenses();
-        totalExpenses += operationalExpenses;
-
-        // Calculate marketing expenses (if applicable)
-        double marketingExpenses = calculateMarketingExpenses();
-        totalExpenses += marketingExpenses;
-
-        // Add any other relevant expenses
-        // totalExpenses += calculateOtherExpenses();
-
-        return totalExpenses;
-    }
+ 
 
     public Map<String, List<Product>> getBestSellingProductss() {
         Map<String, List<Product>> bestSellers = new HashMap<>();
@@ -884,24 +851,6 @@ public class sweetSys {
     }
 
 
-
-   /* public List<Recipe> searchRecipes(String keyword) {
-        logger.info("Searching for recipes containing: " + keyword);
-        logger.info("Total recipes before search: " + recipes.size());
-        List<Recipe> results = new ArrayList<>();
-        for (Recipe recipe : recipes) {
-            logger.info("Checking recipe: " + recipe.getName());
-            if (recipe.getName().toLowerCase().contains(keyword.toLowerCase()) ||
-                recipe.getIngredients().toLowerCase().contains(keyword.toLowerCase())) {
-                results.add(recipe);
-                logger.info("Match found: " + recipe.getName());
-            }
-        }
-        message = "Search completed. Found " + results.size() + " recipes.";
-        lastOperationSuccessful = true;
-        logger.info(message);
-        return results;
-    }*/
 
 
     // saerch for recipe
@@ -1182,11 +1131,12 @@ public class sweetSys {
 
         for (Order order : orders) {
             if (order.getId().equals(id)) {
-                Order x = new Order(order.getId(), order.getRecipient(), order.getPhone(), order.getAddress(), newState, order.getSupervisor());
-                orders.remove(order);
-                orders.add(x);
+                if (order.getStatus().equals(oldState)) {
+                    Order x = new Order(order.getId(), order.getRecipient(), order.getPhone(), order.getAddress(), newState, order.getSupervisor());
+                    orders.remove(order);
+                    orders.add(x);
+                }
 
-//                    order.setStatus(newState);
                 break;
             }
         }
