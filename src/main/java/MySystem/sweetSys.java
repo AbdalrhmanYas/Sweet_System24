@@ -60,6 +60,9 @@ public class sweetSys {
     static String WT =" Revenue";
     static String WR =" Profit";
     static String WS ="Total Revenue";
+    static String ER ="owner";
+    static String SU ="supplier";
+    static String AD ="admin";
     public sweetSys() {
         orders = new ArrayList<>();
         users = new ArrayList<>();
@@ -152,10 +155,10 @@ public class sweetSys {
 
 
     private void initializeTestRecipesAndFeedback() {
-        orders.add(new Order("000", "Hamza", "0599888882", V, "Shipped", "owner"));
-        orders.add(new Order("001", "Rami", "0599888883", V, "Delivered", "supplier"));
-        orders.add(new Order("002", "Khaled", "0599888884", V, "Cancelled", "owner"));
-        orders.add(new Order("003", "Ahmed", "0599888885", V, "In Progress", "supplier"));
+        orders.add(new Order("000", "Hamza", "0599888882", V, "Shipped", ER));
+        orders.add(new Order("001", "Rami", "0599888883", V, "Delivered", SU));
+        orders.add(new Order("002", "Khaled", "0599888884", V, "Cancelled", ER));
+        orders.add(new Order("003", "Ahmed", "0599888885", V, "In Progress", SU));
 
 
         recipes.add(new Recipe(1, P, "Flour, Sugar, Cocoa", R, "admin1", Q));
@@ -201,7 +204,7 @@ public class sweetSys {
                 isLoggedIn = true;
                 lastOperationSuccessful = true;
                 currentUser = user;
-                String roleMessage = user instanceof Admin ? "admin" : user.getRole();
+                String roleMessage = user instanceof Admin ? AD : user.getRole();
                 msg = "Welcome to the Sweet Management System, " + roleMessage + " " + username + "!";
                 logger.info("Login successful for " + roleMessage + ": " + username);
                 return;
@@ -518,7 +521,7 @@ public class sweetSys {
     public List<User> getAllOwners() {
         ArrayList<User> owners = new ArrayList<User>();
         for (User u : users) {
-            if (u.getRole().equals("owner")) {
+            if (u.getRole().equals(ER)) {
                 owners.add(u);
             }
         }
@@ -528,7 +531,7 @@ public class sweetSys {
     public List<User> getAllSuppliers() {
         ArrayList<User> suppliers = new ArrayList<User>();
         for (User u : users) {
-            if (u.getRole().equals("supplier")) {
+            if (u.getRole().equals(SU)) {
                 suppliers.add(u);
             }
         }
@@ -1194,7 +1197,7 @@ public class sweetSys {
 
 
     public boolean receivedCheck(User u1) {
-        if (u1.getRole().equals("admin") || u1.getRole().equals("supplier")) {
+        if (u1.getRole().equals(AD) || u1.getRole().equals(SU)) {
             return true;
         }
         return false;
