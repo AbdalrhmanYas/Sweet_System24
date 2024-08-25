@@ -20,6 +20,11 @@ public class Main {
     static String F = "3-) Return to Admin Dashboard";
     static String G = "Invalid choice. Please try again.";
     static String H ="Returning to Store Owner Dashboard...";
+    static String J ="Total Revenue";
+    static String K ="Product";
+    static String L = "%-20s %-10s%n";
+    static String M = "Price";
+    static String N ="%-20s $%-9.2f%n";
     private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
     public static void mainMenu() {
         logger.info("\n===== MAIN MENU =====");
@@ -452,7 +457,7 @@ public class Main {
         Map<String, Double> profitBreakdown = s.calculateProfits();
 
         // Display overall profit summary
-        System.out.printf("Total Revenue: $%.2f%n", profitBreakdown.get("Total Revenue"));
+        System.out.printf("Total Revenue: $%.2f%n", profitBreakdown.get(J));
         System.out.printf("Total Costs: $%.2f%n", profitBreakdown.get("Total Costs"));
         System.out.printf("Total Profit: $%.2f%n", profitBreakdown.get("Total Profit"));
         System.out.printf("Profit Margin: %.2f%%%n", profitBreakdown.get("Profit Margin (%)"));
@@ -585,7 +590,7 @@ public class Main {
             if (products.isEmpty()) {
                 logger.info("  No sales data available for this store.");
             } else {
-                System.out.printf("  %-20s %-15s %-15s %-15s%n", "Product", "Sales Quantity", "Revenue", "Profit Margin");
+                System.out.printf("  %-20s %-15s %-15s %-15s%n", K, "Sales Quantity", "Revenue", "Profit Margin");
                 //logger.info("  " + "-".repeat(70));
                 logger.info("  " + repeat("-", 70));
 
@@ -640,7 +645,7 @@ public class Main {
         List<Map.Entry<String, Double>> sortedProducts = new ArrayList<>(productTotalSales.entrySet());
         sortedProducts.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
 
-        System.out.printf("%-20s %-15s%n", "Product", "Total Sales");
+        System.out.printf("%-20s %-15s%n", K, "Total Sales");
         //logger.info("-".repeat(36));
         logger.info(repeat("-", 36));
 
@@ -670,7 +675,7 @@ public class Main {
             return;
         }
 
-        System.out.printf("%-20s %-10s%n", "City", "Users");
+        System.out.printf(L, "City", "Users");
        // logger.info("-".repeat(31));
         logger.info(repeat("-", 31));
 
@@ -1200,7 +1205,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
             logger.info("Your inventory is empty.");
         } else {
             logger.info("\nYour Inventory:");
-            System.out.printf("%-5s %-20s %-10s %-10s%n", "ID", "Name", "Price", "Quantity");
+            System.out.printf("%-5s %-20s %-10s %-10s%n", "ID", "Name", M, "Quantity");
             logger.info(repeat("-", 50));
             for (Product product : inventory) {
                 System.out.printf("%-5d %-20s $%-9.2f %-10d%n",
@@ -1244,17 +1249,17 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
         Map<String, Double> salesReport = s.getSalesReport(owner.getUsername());
         if (salesReport != null) {
             logger.info("\n===== Sales Report =====");
-            System.out.printf("%-20s %-10s%n", "Product", "Revenue");
+            System.out.printf(L, K, "Revenue");
             logger.info(repeat("-", 32));
             double totalRevenue = 0;
             for (Map.Entry<String, Double> entry : salesReport.entrySet()) {
-                if (!entry.getKey().equals("Total Revenue")) {
-                    System.out.printf("%-20s $%-9.2f%n", entry.getKey(), entry.getValue());
+                if (!entry.getKey().equals(J)) {
+                    System.out.printf(N, entry.getKey(), entry.getValue());
                     totalRevenue += entry.getValue();
                 }
             }
             logger.info(repeat("-", 32));
-            System.out.printf("%-20s $%-9.2f%n", "Total Revenue", totalRevenue);
+            System.out.printf(N, J, totalRevenue);
         } else {
             logger.info("Failed to generate sales report.");
         }
@@ -1264,15 +1269,15 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
         Map<String, Double> profitReport = s.getProfitReport(owner.getUsername());
         if (profitReport != null) {
             logger.info("\n===== Profit Report =====");
-            System.out.printf("%-20s %-10s%n", "Product", "Profit");
+            System.out.printf(L, K, "Profit");
             logger.info(repeat("-", 32));
             double totalProfit = 0;
             for (Map.Entry<String, Double> entry : profitReport.entrySet()) {
-                System.out.printf("%-20s $%-9.2f%n", entry.getKey(), entry.getValue());
+                System.out.printf(N, entry.getKey(), entry.getValue());
                 totalProfit += entry.getValue();
             }
             logger.info(repeat("-", 32));
-            System.out.printf("%-20s $%-9.2f%n", "Total Profit", totalProfit);
+            System.out.printf(N, "Total Profit", totalProfit);
         } else {
             logger.info("Failed to generate profit report.");
         }
@@ -1367,7 +1372,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void viewAllDiscounts(sweetSys s, StoreOwner owner) {
         List<Product> inventory = owner.getInventory();
         logger.info("\n===== Current Discounts =====");
-        System.out.printf("%-20s %-10s %-15s %-15s %-15s%n", "Product", "Price", "Discount", "Start Date", "End Date");
+        System.out.printf("%-20s %-10s %-15s %-15s %-15s%n", K, M, "Discount", "Start Date", "End Date");
         logger.info(repeat("-", 80));
         for (Product product : inventory) {
             if (product.isDiscountActive()) {
@@ -1723,7 +1728,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
             logger.info("Your inventory is empty.");
         } else {
             logger.info("\nYour Inventory:");
-            System.out.printf("%-5s %-20s %-10s %-10s%n", "ID", "Name", "Price", "Quantity");
+            System.out.printf("%-5s %-20s %-10s %-10s%n", "ID", "Name", M, "Quantity");
             logger.info(repeat("-", 50));
             for (Product product : inventory) {
                 System.out.printf("%-5d %-20s $%-9.2f %-10d%n",
@@ -1853,6 +1858,7 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                         logger.info("Exiting the system. Goodbye!");
                         sc.close();
                         System.exit(0);
+                        break;
                     }
                     default:
                         logger.info("Invalid choice. Please select a number between 1 and 4.");
