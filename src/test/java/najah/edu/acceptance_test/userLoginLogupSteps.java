@@ -12,7 +12,7 @@ public class userLoginLogupSteps {
     private sweetSys myApp;
     private String username;   // THIS AND OTHER ATTRIPUTES FOR SIGN UP TESTING 
     private String password;
-    private String conpass;
+    private String confirmedPassword;;
     private String city;
     private String role;
     private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
@@ -94,10 +94,10 @@ public class userLoginLogupSteps {
     public void the_user_enters_a_valid_password(String password) {
         this.password = password;
     }
-    
+
     @When("the user confirms the password {string}")
     public void the_user_confirms_the_password(String confirmPassword) {
-        this.conpass = confirmPassword;
+        this.confirmedPassword = confirmPassword;
     }
     
     @When("the user selects the role {string}")
@@ -109,12 +109,16 @@ public class userLoginLogupSteps {
     public void the_user_enters_the_city(String city) {
         this.city = city;
     }
-    
+
     @When("the user submits the sign up form")
     public void the_user_submits_the_sign_up_form() {
-        myApp.signUp(username, password, role, city);
+        if (password.equals(confirmedPassword)) {
+            myApp.signUp(username, password, role, city);
+        } else {
+            myApp.setMessage("Password confirmation does not match");
+            throw new AssertionError("Password confirmation does not match");
+        }
     }
-    
     @Then("the user should be registered successfully")
     public void the_user_should_be_registered_successfully() {
         assertTrue("User should be registered successfully", myApp.isLastOperationSuccessful());

@@ -96,7 +96,7 @@ public class sweetSys {
         Recipe chocolateCake = new Recipe(1, P, "flour, sugar, cocoa powder, eggs, milk", R, O, Q);
         chocolateCake.addDietaryRestriction("vegetarian");
         recipes.add(chocolateCake);
-        logger.info(String.format("%s%s", I, chocolateCake.getName()));
+        logger.info(I + chocolateCake.getName());
 
         Recipe veganBrownies = new Recipe(2, "Vegan Brownies", "flour, sugar, cocoa powder, vegan butter, almond milk", R, S, "Brownies");
         veganBrownies.addDietaryRestriction("vegan");
