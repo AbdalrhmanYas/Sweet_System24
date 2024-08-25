@@ -679,8 +679,8 @@ public class sweetSys {
 
     private double calculateCOGS() {
         return users.stream()
-                .filter(user -> user instanceof StoreOwner)
-                .map(user -> (StoreOwner) user)
+                .filter(StoreOwner.class::isInstance)
+                .map(StoreOwner.class::cast)
                 .flatMap(owner -> owner.getInventory().stream())
                 .mapToDouble(product -> product.getCost() * product.getSalesQuantity())
                 .sum();
