@@ -777,7 +777,7 @@ public class sweetSys {
         }
         msg = "Failed to generate profit report. User is not a store owner.";
         lastOperationSuccessful = false;
-        return null;
+        return Collections.emptyMap();
     }
 
 
