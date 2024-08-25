@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.Optional;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+
 
 public class sweetSys {
     private final ArrayList<User> users;
@@ -41,7 +41,7 @@ public class sweetSys {
     private String msg;  // FOR LOGIN & Signup MESSAGES
 
     private String lastGeneratedReport;
-    private StoreOwner storeowner;
+
     static String I ="Added recipe: ";
     static String O = "user1";
     static String P = "Chocolate Cake";
