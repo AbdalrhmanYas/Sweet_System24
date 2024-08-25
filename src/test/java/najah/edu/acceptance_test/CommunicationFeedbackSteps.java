@@ -37,9 +37,9 @@ public class CommunicationFeedbackSteps {
         }
         User owner = sweetSys.getUserByUsername(ownerUsername);
         assertTrue("User should be a store owner", owner instanceof StoreOwner);
-        StoreOwner storeOwner = (StoreOwner) owner;
+        StoreOwner storeowner = (StoreOwner) owner;
         Product product = new Product(1, productName, 15.99, 10, ownerUsername);
-        storeOwner.addProduct(product);
+        storeowner.addProduct(product);
     }
 
     @When("the user sends a message {string} to {string}")

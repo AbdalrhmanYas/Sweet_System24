@@ -42,16 +42,7 @@ public class RecipeExplorationSteps {
         }
     }
 
-    
-    
-    //  This statement is a validation step that ensures the search functionality is working properly by returning actual results, it verifies that the search gives at least one result.
-    /*@Then("the number of search results should be greater than {int}")
-    public void the_number_of_search_results_should_be_greater_than(Integer minResults) {
-        assertTrue("Number of search results should be greater than " + minResults + 
-                   " but was " + searchResults.size() + 
-                   ". Search results: " + searchResults, 
-                   searchResults.size() > minResults);
-    }*/
+
     
     @Then("the number of search results should be greater than {int}")
     public void the_number_of_search_results_should_be_greater_than(Integer minResults) {

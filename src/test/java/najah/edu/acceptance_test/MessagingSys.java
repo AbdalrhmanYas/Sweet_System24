@@ -21,7 +21,7 @@ public class MessagingSys {
 
     @Given("I am logged in as a {string}")
     public void i_am_logged_in_as_a(String role) {
-        assertEquals("User is an owner", role,"owner");
+        assertEquals("User is an owner", "owner",role);
 
     }
 
