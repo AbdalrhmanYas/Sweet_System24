@@ -21,7 +21,7 @@ public class InventoryManager extends User {
 
     public boolean addProduct(Product product) {
         logger.info("InventoryManager adding product: " + product.getName());
-        if (product != null && !isProductInInventory(product.getName())) {
+        if (!isProductInInventory(product.getName())) {
             inventory.add(product);
             logger.info("Product added to inventory. New inventory size: " + inventory.size());
             return true;
