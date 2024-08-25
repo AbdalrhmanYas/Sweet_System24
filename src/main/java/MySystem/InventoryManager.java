@@ -3,9 +3,11 @@ package MySystem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class InventoryManager extends User {
     protected List<Product> inventory;
+    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
 
     public InventoryManager(String username, String password, String role, String city) {
         super(username, password, role, city);

@@ -3,6 +3,7 @@ package MySystem;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class sweetSys {
@@ -12,7 +13,7 @@ public class sweetSys {
     private final List<Product> products;
     private ArrayList<Order> orders;
 
-
+    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
 
     private final Map<String, List<Message>> userMessages;
 
