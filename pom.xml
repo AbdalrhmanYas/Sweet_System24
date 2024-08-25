@@ -5,6 +5,10 @@
   <version>0.0.1-SNAPSHOT</version>
 
 
+    <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
+
 
     <repositories>
         <repository>
@@ -15,7 +19,7 @@
 
 
     <dependencies>
-  
+
   <!--my comment/////////////////////////////////////////////////////////-->
   
  <dependency>
