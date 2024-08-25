@@ -43,7 +43,7 @@ public class sweetSys {
 
     private String lastGeneratedReport;
 
-    static String I ="Added recipe: ";
+
     static String O = "user1";
     static String P = "Chocolate Cake";
     static String Q = "Cakes";
