@@ -182,7 +182,6 @@ public class Main {
         List<User> ownerList = s.getAllOwners();
         List<User> supplierList = s.getAllSuppliers();
         logger.info("\n===== Users in the System =====");
-        //logger.info("------------------------------------");
         logger.info(repeat("-", 36));
         logger.info("Store Owners:");
         for (User u : ownerList) {
