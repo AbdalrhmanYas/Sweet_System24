@@ -67,6 +67,7 @@ public class sweetSys {
     private void logAddedRecipe(Recipe recipe) {
         logger.info("Added recipe: " + recipe.getName());
     }
+
     public sweetSys() {
         orders = new ArrayList<>();
         users = new ArrayList<>();
@@ -101,16 +102,17 @@ public class sweetSys {
         recipes.add(chocolateCake);
         logAddedRecipe(chocolateCake);
 
-        Recipe veganBrownies = new Recipe(2, "Vegan Brownies", "flour, sugar, cocoa powder, vegan butter, almond milk", R, S, "Brownies");
+        Recipe veganBrownies = new Recipe(2, "Vegan Brownies",
+                "flour, sugar, cocoa powder, vegan butter, almond milk", "Mix and bake", "user2", "Brownies");
         veganBrownies.addDietaryRestriction("vegan");
         veganBrownies.addDietaryRestriction("dairy-free");
         recipes.add(veganBrownies);
-        logger.info(I + veganBrownies.getName());
+        logAddedRecipe(veganBrownies);
 
         Recipe glutenFreeCookies = new Recipe(3, "Gluten-Free Cookies", "gluten-free flour, sugar, butter, eggs", R, T, "Cookies");
         glutenFreeCookies.addDietaryRestriction("gluten-free");
         recipes.add(glutenFreeCookies);
-        logger.info(I + glutenFreeCookies.getName());
+        logAddedRecipe(glutenFreeCookies);
 
         logger.info("Total recipes initialized: " + recipes.size());
 
