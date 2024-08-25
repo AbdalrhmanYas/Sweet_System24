@@ -12,7 +12,7 @@ public class userLoginLogupSteps {
     private sweetSys myApp;
     private String username;   // THIS AND OTHER ATTRIPUTES FOR SIGN UP TESTING 
     private String password;
-    private String confirmedPassword;;
+    private String confirmedPassword;
     private String city;
     private String role;
     private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
