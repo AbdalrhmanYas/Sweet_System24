@@ -93,7 +93,8 @@
         </plugins>
     </build>
     <properties>
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.organization>abdalrhmanyas</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
 
