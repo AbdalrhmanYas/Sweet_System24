@@ -95,15 +95,5 @@ public class User {
     }
     
     
-    
-    // Equals method for comparison
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        User user = (User) obj;
-        return username.equals(user.username) &&
-               password.equals(user.password) &&
-               role.equals(user.role);
-    }
+
 }
