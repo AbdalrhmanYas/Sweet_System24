@@ -54,7 +54,7 @@ public class sweetSys {
     static String W = "Jenin";
     static String X ="Ramallah";
     static String Y = "Hebron";
-    static String Z = "Bethlehem";
+    static String WE = "Bethlehem";
     static String z ="regular";
     static String w ="User not found.";
     static String t =" Revenue";
@@ -125,14 +125,14 @@ public class sweetSys {
         users.add(new Admin("admin2", "adminpass2", W));
         users.add(new Admin("admin3", "adminpass3", X));
         users.add(new Admin("admin4", "adminpass4", Y));
-        users.add(new Admin("admin5", "adminpass5", Z));
+        users.add(new Admin("admin5", "adminpass5", WE));
 
         // Suppliers
         users.add(new Supplier("supplier1", "supplierpass1", V));
         users.add(new Supplier("supplier2", "supplierpass2", W));
         users.add(new Supplier("supplier3", "supplierpass3", X));
         users.add(new Supplier("supplier4", "supplierpass4", Y));
-        users.add(new Supplier("supplier5", "supplierpass5", Z));
+        users.add(new Supplier("supplier5", "supplierpass5", WE));
 
         // Store Owners
         users.add(new StoreOwner("storeowner_x", "storeowner2", V));
@@ -140,14 +140,14 @@ public class sweetSys {
         users.add(new StoreOwner("owner2", "ownerpass2", W));
         users.add(new StoreOwner("owner3", "ownerpass3", X));
         users.add(new StoreOwner("owner4", "ownerpass4", Y));
-        users.add(new StoreOwner("owner5", "ownerpass5", Z));
+        users.add(new StoreOwner("owner5", "ownerpass5", WE));
 
         // Regular Users
         users.add(new User(O, "userpass1", z, V));
         users.add(new User(S, "userpass2", z, W));
         users.add(new User(T, "userpass3", z, X));
         users.add(new User("user4", "userpass4", z, Y));
-        users.add(new User("user5", "userpass5", z, Z));
+        users.add(new User("user5", "userpass5", z, WE));
     }
 
 
