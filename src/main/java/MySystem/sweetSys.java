@@ -640,7 +640,7 @@ public class sweetSys {
         report.append("3. Top Selling Products\n");
         Map<String, List<Product>> bestSellers = getBestSellingProductss();
         for (Map.Entry<String, List<Product>> entry : bestSellers.entrySet()) {
-            report.append(String.format("   Store: %s\n", entry.getKey()));
+            report.append(String.format("   Store: %s%n", entry.getKey()));
             List<Product> products = entry.getValue();
             for (int i = 0; i < products.size(); i++) {
                 Product product = products.get(i);
@@ -662,33 +662,6 @@ public class sweetSys {
     }
 
 
-    private double calculateProductSalesRevenue() {
-        return users.stream()
-                .filter(user -> user instanceof StoreOwner)
-                .map(user -> (StoreOwner) user)
-                .flatMap(owner -> owner.getInventory().stream())
-                .mapToDouble(Product::getRevenue)
-                .sum();
-    }
-
-    private double calculateRecipeSalesRevenue() {
-        return recipes.stream()
-                .filter(recipe -> recipe.getPrice() > 0)
-                .mapToDouble(recipe -> recipe.getPrice() * recipe.getPurchaseCount())
-                .sum();
-    }
-
-
-    private List<Product> getTopSellingProducts(int limit) {
-        return users.stream()
-                .filter(user -> user instanceof StoreOwner)
-                .map(user -> (StoreOwner) user)
-                .flatMap(owner -> owner.getInventory().stream())
-                .sorted((p1, p2) -> Integer.compare(p2.getSalesQuantity(), p1.getSalesQuantity()))
-                .limit(limit)
-                .collect(Collectors.toList());
-    }
-
 
     public String getLastGeneratedReport() {
         if (lastGeneratedReport.isEmpty()) {
@@ -702,30 +675,7 @@ public class sweetSys {
     }
 
 
-    private double calculateRevenue() {
-        double totalRevenue = 0.0;
 
-        // Calculate revenue from product sales
-        for (User user : users) {
-            if (user instanceof StoreOwner) {
-                StoreOwner owner = (StoreOwner) user;
-                totalRevenue += owner.getInventory().stream()
-                        .mapToDouble(Product::getRevenue)
-                        .sum();
-            }
-        }
-
-        // Calculate revenue from recipe purchases (if applicable)
-        totalRevenue += recipes.stream()
-                .filter(recipe -> recipe.getPrice() > 0)
-                .mapToDouble(recipe -> recipe.getPrice() * recipe.getPurchaseCount())
-                .sum();
-
-        // Add any additional revenue streams (e.g., subscription fees, if applicable)
-        // totalRevenue += calculateSubscriptionRevenue();
-
-        return totalRevenue;
-    }
 
     private double calculateCOGS() {
         return users.stream()
