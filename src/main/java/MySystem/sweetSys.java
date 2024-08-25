@@ -519,7 +519,7 @@ public class sweetSys {
     }
 
     public List<User> getAllOwners() {
-        ArrayList<User> owners = new ArrayList();
+        ArrayList<User> owners = new ArrayList<User>();
         for (User u : users) {
             if (u.getRole().equals(ER)) {
                 owners.add(u);
@@ -529,7 +529,7 @@ public class sweetSys {
     }
 
     public List<User> getAllSuppliers() {
-        ArrayList<User> suppliers = new ArrayList();
+        ArrayList<User> suppliers = new ArrayList<User>();
         for (User u : users) {
             if (u.getRole().equals(SU)) {
                 suppliers.add(u);
