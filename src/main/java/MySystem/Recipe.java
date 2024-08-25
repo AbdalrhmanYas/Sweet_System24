@@ -37,9 +37,6 @@ public class Recipe {
         dietaryRestrictions.add(restriction);
     }
 
-    public void removeDietaryRestriction(String restriction) {
-        dietaryRestrictions.remove(restriction);
-    }
 
 
 
@@ -47,8 +44,6 @@ public class Recipe {
     public int getId() { return id; }
     public String getName() { return name; }  // to return the name of the recipe
     public String getIngredients() { return ingredients; }
-    public String getInstructions() { return instructions; }
-    public String getAuthor() { return author; }
 
     public String getCategory() { return category; }
 
@@ -56,9 +51,5 @@ public class Recipe {
     private double price; // Price of the recipe, if it's for sale
     private int purchaseCount; // Number of times the recipe has been purchased
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
 
-    public int getPurchaseCount() { return purchaseCount; }
-    public void incrementPurchaseCount() { this.purchaseCount++; }
 }

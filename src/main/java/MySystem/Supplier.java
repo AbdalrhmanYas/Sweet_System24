@@ -5,7 +5,5 @@ public class Supplier extends InventoryManager {
         super(username, password, "supplier", city);
     }
 
-    public Supplier() {
-        super();
-    }
+
 }

@@ -16,14 +16,7 @@ public class Message {
     }
 
     // Getters
-    public String getSender() 
-    {
-    	return sender; 
-    }
-    public String getRecipient() 
-    { 
-    	return recipient; 
-    }
+
     public String getContent() 
     {
     	return content; 
@@ -31,8 +24,5 @@ public class Message {
     
     
     
-    public LocalDateTime getTimestamp() 
-    {
-    	return timestamp; 
-    }
+
 }

@@ -7,7 +7,5 @@ public class StoreOwner extends InventoryManager {
         super(username, password, "owner", city);
     }
 
-    public StoreOwner() {
-        super();
-    }
+
 }

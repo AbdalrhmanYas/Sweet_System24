@@ -48,9 +48,6 @@ public class Product {
                 !discountStartDate.isEqual(discountEndDate);
     }
 
-    public double getDiscountPercentage() {
-        return discountPercentage;
-    }
 
     public double getDiscountedPrice() {
         if (isDiscountActive()) {
@@ -60,10 +57,7 @@ public class Product {
     }
 
     // Getters and setters
-    public int getId()
-    {
-        return id;
-    }
+
 
 
 

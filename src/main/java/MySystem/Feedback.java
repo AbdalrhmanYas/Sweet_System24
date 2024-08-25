@@ -22,9 +22,7 @@ public class Feedback {
         return id;
     }
 
-    public String getContent() {
-        return content;
-    }
+
 
     public String getAuthor() {
         return author;
@@ -38,12 +36,5 @@ public class Feedback {
         this.resolved = resolved;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
 
-    // You might want to add a setter for date if you need to set a specific date
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 }

@@ -54,34 +54,14 @@ public class User {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-    
-    
-    
+
+
     
     
     
     public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
     public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-    
-    
-    
-    public String getBusinessName() { return businessName; }
-    public void setBusinessName(String businessName) { this.businessName = businessName; }
-    public String getContactEmail() { return contactEmail; }
-    public void setContactEmail(String contactEmail) { this.contactEmail = contactEmail; }
-    public String getContactPhone() { return contactPhone; }
-    public void setContactPhone(String contactPhone) { this.contactPhone = contactPhone; }
-    public String getBusinessAddress() { return businessAddress; }
-    public void setBusinessAddress(String businessAddress) { this.businessAddress = businessAddress; }
-    public String getBusinessDescription() { return businessDescription; }
-    public void setBusinessDescription(String businessDescription) { this.businessDescription = businessDescription; }
 
-    
     
     
     

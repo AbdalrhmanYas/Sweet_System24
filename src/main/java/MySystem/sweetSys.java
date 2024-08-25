@@ -953,19 +953,8 @@ public class sweetSys {
         return itemFeedback.getOrDefault(itemName, new ArrayList<>());
     }
 
-    public Recipe getRecipeByName(String name) {
-        for (Recipe recipe : recipes) {
-            if (recipe.getName().equals(name)) {
-                return recipe;
-            }
-        }
-        return null;
-    }
 
 
-    public List<Feedback> getProductFeedback(String productName) {
-        return productFeedback.getOrDefault(productName, new ArrayList<>());
-    }
 
 
     public List<Feedback> getAllFeedback() {
@@ -1011,39 +1000,7 @@ public class sweetSys {
     }
 
 
-    public boolean setProductDiscount(String ownerUsername, String productName, double discountPercentage, LocalDate startDate, LocalDate endDate) {
-        User user = getUserByUsername(ownerUsername);
-        if (user instanceof StoreOwner) {
-            StoreOwner owner = (StoreOwner) user;
-            Product product = owner.getProductByName(productName);
-            if (product != null) {
-                product.setDiscount(discountPercentage, startDate, endDate);
-                msg = "Discount applied successfully.";
-                lastOperationSuccessful = true;
-                return true;
-            }
-        }
-        msg = "Failed to apply discount. Product not found or user is not a store owner.";
-        lastOperationSuccessful = false;
-        return false;
-    }
 
-    public boolean removeProductDiscount(String ownerUsername, String productName) {
-        User user = getUserByUsername(ownerUsername);
-        if (user instanceof StoreOwner) {
-            StoreOwner owner = (StoreOwner) user;
-            Product product = owner.getProductByName(productName);
-            if (product != null) {
-                product.removeDiscount();
-                msg = "Discount removed successfully.";
-                lastOperationSuccessful = true;
-                return true;
-            }
-        }
-        msg = "Failed to remove discount. Product not found or user is not a store owner.";
-        lastOperationSuccessful = false;
-        return false;
-    }
 
 
     // Getters
@@ -1088,19 +1045,7 @@ public class sweetSys {
         return null;
     }
 
-    public boolean orderStateIsProcessed(String status) {
-        for (Order order : orders) {
-            if (order.getStatus().equals(status)) return true;
-        }
-        return false;
-    }
 
-    public String getOrderState(String status) {
-        for (Order order : orders) {
-            if (order.getStatus().equals(status)) return status;
-        }
-        return null;
-    }
 
     public void updateOrder(String id, String oldState, String newState) {
 
@@ -1129,14 +1074,5 @@ public class sweetSys {
         return null;
     }
 
-    public Order getOrderById(String id) {
-        for (Order order : orders) {
-            if (order.getId().equals(id)) {
 
-                return order;
-            }
-        }
-
-        return null;
-    }
 }
