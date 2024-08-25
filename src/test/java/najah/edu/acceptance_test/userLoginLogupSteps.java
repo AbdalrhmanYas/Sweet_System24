@@ -135,9 +135,9 @@ public class userLoginLogupSteps {
     
     @Then("the user's role should be {string}")
     public void the_users_role_should_be(String expectedRole) {
-        User currentUser = myApp.getCurrentUser();
-        assertNotNull("Current user should not be null", currentUser);
-        String actualRole = currentUser.getRole();
+        User currentuser = myApp.getCurrentUser();
+        assertNotNull("Current user should not be null", currentuser);
+        String actualRole = currentuser.getRole();
         if (expectedRole.equals("owner") && actualRole.equals("store owner")) {
             actualRole = "owner";
         }

@@ -20,13 +20,20 @@ public class InventoryManager extends User {
     }
 
     public boolean addProduct(Product product) {
-        logger.info("InventoryManager adding product: {}"+ product.getName());
+        if (product == null) {
+            logger.info("Cannot add null product to inventory.");
+            return false;
+        }
+
+        logger.info("InventoryManager adding product: " + product.getName());
+
         if (!isProductInInventory(product.getName())) {
             inventory.add(product);
-            logger.info("Product added to inventory. New inventory size: {}"+ inventory.size());
+            logger.info("Product added to inventory. New inventory size: " + inventory.size());
             return true;
         }
-        logger.info("Product not added. Already in inventory or null product.");
+
+        logger.info("Product not added. Already in inventory.");
         return false;
     }
 
