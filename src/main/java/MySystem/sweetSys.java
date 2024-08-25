@@ -706,7 +706,7 @@ public class sweetSys {
         }
         msg = "Failed to generate sales report. User is not a store owner.";
         lastOperationSuccessful = false;
-        return null;
+        return Collections.emptyMap();
     }
 
 
