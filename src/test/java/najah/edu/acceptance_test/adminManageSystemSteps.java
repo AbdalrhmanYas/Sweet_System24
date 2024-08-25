@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import MySystem.*;
 import io.cucumber.java.en.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class adminManageSystemSteps {
 
@@ -14,6 +15,7 @@ public class adminManageSystemSteps {
     private Map<String, Integer> userStatistics;
     private List<Recipe> recipes;
     private List<Feedback> feedbackList;
+    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
 
     public adminManageSystemSteps() {
         this.sweetSys = new sweetSys(); // dependenct injection before each test

@@ -69,25 +69,25 @@ public class sweetSys {
 
 
         recipes = new ArrayList<>();
-        System.out.println("Initializing recipes:");
+        logger.info("Initializing recipes:");
 
         Recipe chocolateCake = new Recipe(1, "Chocolate Cake", "flour, sugar, cocoa powder, eggs, milk", "Mix and bake", "user1", "Cakes");
         chocolateCake.addDietaryRestriction("vegetarian");
         recipes.add(chocolateCake);
-        System.out.println("Added recipe: " + chocolateCake.getName());
+        logger.info("Added recipe: " + chocolateCake.getName());
 
         Recipe veganBrownies = new Recipe(2, "Vegan Brownies", "flour, sugar, cocoa powder, vegan butter, almond milk", "Mix and bake", "user2", "Brownies");
         veganBrownies.addDietaryRestriction("vegan");
         veganBrownies.addDietaryRestriction("dairy-free");
         recipes.add(veganBrownies);
-        System.out.println("Added recipe: " + veganBrownies.getName());
+        logger.info("Added recipe: " + veganBrownies.getName());
 
         Recipe glutenFreeCookies = new Recipe(3, "Gluten-Free Cookies", "gluten-free flour, sugar, butter, eggs", "Mix and bake", "user3", "Cookies");
         glutenFreeCookies.addDietaryRestriction("gluten-free");
         recipes.add(glutenFreeCookies);
-        System.out.println("Added recipe: " + glutenFreeCookies.getName());
+        logger.info("Added recipe: " + glutenFreeCookies.getName());
 
-        System.out.println("Total recipes initialized: " + recipes.size());
+        logger.info("Total recipes initialized: " + recipes.size());
 
 
         StoreOwner owner1 = (StoreOwner) getUserByUsername("owner1");
@@ -185,14 +185,14 @@ public class sweetSys {
                 currentUser = user;
                 String roleMessage = user instanceof Admin ? "admin" : user.getRole();
                 msg = "Welcome to the Sweet Management System, " + roleMessage + " " + username + "!";
-                System.out.println("Login successful for " + roleMessage + ": " + username);
+                logger.info("Login successful for " + roleMessage + ": " + username);
                 return;
             }
         }
         isLoggedIn = false;
         lastOperationSuccessful = false;
         msg = "Login failed. Please check your username and password.";
-        System.out.println("Login failed for user: " + username);
+        logger.info("Login failed for user: " + username);
     }
 
 
@@ -252,7 +252,7 @@ public class sweetSys {
         isSignUpInProgress = false;
         currentUser = newUser;
         isLoggedIn = true;
-        System.out.println("New user created: " + newUser.getClass().getSimpleName() + " - " + username);
+        logger.info("New user created: " + newUser.getClass().getSimpleName() + " - " + username);
     }
 
 
@@ -329,14 +329,14 @@ public class sweetSys {
     //-----------------------------------------------------------------------------------------------
     public boolean addProduct(String username, Product product) {
         User user = getUserByUsername(username);
-        System.out.println("Adding product for user: " + username + ", user object: " + user);
+        logger.info("Adding product for user: " + username + ", user object: " + user);
         if (user instanceof InventoryManager) {
             InventoryManager manager = (InventoryManager) user;
             boolean result = manager.addProduct(product);
-            System.out.println("Product added result: " + result);
+            logger.info("Product added result: " + result);
             return result;
         }
-        System.out.println("User is not an InventoryManager");
+        logger.info("User is not an InventoryManager");
         return false;
     }
 
@@ -914,20 +914,20 @@ public class sweetSys {
 
 
    /* public List<Recipe> searchRecipes(String keyword) {
-        System.out.println("Searching for recipes containing: " + keyword);
-        System.out.println("Total recipes before search: " + recipes.size());
+        logger.info("Searching for recipes containing: " + keyword);
+        logger.info("Total recipes before search: " + recipes.size());
         List<Recipe> results = new ArrayList<>();
         for (Recipe recipe : recipes) {
-            System.out.println("Checking recipe: " + recipe.getName());
+            logger.info("Checking recipe: " + recipe.getName());
             if (recipe.getName().toLowerCase().contains(keyword.toLowerCase()) ||
                 recipe.getIngredients().toLowerCase().contains(keyword.toLowerCase())) {
                 results.add(recipe);
-                System.out.println("Match found: " + recipe.getName());
+                logger.info("Match found: " + recipe.getName());
             }
         }
         message = "Search completed. Found " + results.size() + " recipes.";
         lastOperationSuccessful = true;
-        System.out.println(message);
+        logger.info(message);
         return results;
     }*/
 
@@ -935,19 +935,19 @@ public class sweetSys {
     // saerch for recipe
 
     public List<Recipe> searchRecipes(String keyword) {
-        System.out.println("Searching for recipes containing: " + keyword);
-        System.out.println("Total recipes before search: " + recipes.size());
+        logger.info("Searching for recipes containing: " + keyword);
+        logger.info("Total recipes before search: " + recipes.size());
         List<Recipe> results = new ArrayList<>();
         for (Recipe recipe : recipes) {
-            System.out.println("Checking recipe: " + recipe.getName());
+            logger.info("Checking recipe: " + recipe.getName());
             if (recipe.getName().toLowerCase().contains(keyword.toLowerCase()) ||
                     recipe.getIngredients().toLowerCase().contains(keyword.toLowerCase()) ||
                     recipe.getCategory().toLowerCase().contains(keyword.toLowerCase())) {
                 results.add(recipe);
-                System.out.println("Match found: " + recipe.getName());
+                logger.info("Match found: " + recipe.getName());
             }
         }
-        System.out.println("Search completed. Found " + results.size() + " recipes.");
+        logger.info("Search completed. Found " + results.size() + " recipes.");
         return results;
     }
 

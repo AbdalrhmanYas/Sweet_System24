@@ -4,11 +4,14 @@ import static org.junit.Assert.*;
 import MySystem.*;
 import io.cucumber.java.en.*;
 
+import java.util.logging.Logger;
+
 public class ProductManagementSteps {
     private sweetSys sweetSys;
     private boolean operationResult;
     
     private String lastAddedProductName;
+    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
 
     public ProductManagementSteps(sweetSys sweetSys) {
         this.sweetSys = sweetSys;
@@ -21,20 +24,20 @@ public class ProductManagementSteps {
         sweetSys.signUp(username, password, role, "TestCity");
         sweetSys.login(username, password);
         assertTrue("User should be logged in", sweetSys.isLoggedIn());
-        System.out.println("Logged in user: " + sweetSys.getCurrentUser().getClass().getSimpleName() + " - " + username);
+        logger.info("Logged in user: " + sweetSys.getCurrentUser().getClass().getSimpleName() + " - " + username);
     }
 
     @When("the user adds a product {string} with price {double} and quantity {int}")
     public void the_user_adds_a_product_with_price_and_quantity(String name, Double price, Integer quantity) {
         User currentUser = sweetSys.getCurrentUser();
-        System.out.println("Current user before adding product: " + currentUser.getClass().getSimpleName() + " - " + currentUser.getUsername());
+        logger.info("Current user before adding product: " + currentUser.getClass().getSimpleName() + " - " + currentUser.getUsername());
         Product newProduct = new Product(1, name, price, quantity, currentUser.getUsername());
         operationResult = sweetSys.addProduct(currentUser.getUsername(), newProduct);
         lastAddedProductName = name;
-        System.out.println("Add product result: " + operationResult);
+        logger.info("Add product result: " + operationResult);
         if (currentUser instanceof InventoryManager) {
             InventoryManager manager = (InventoryManager) currentUser;
-            System.out.println("Inventory after adding product: " + manager.getInventory());
+            logger.info("Inventory after adding product: " + manager.getInventory());
         }
     }
 

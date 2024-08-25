@@ -9,38 +9,42 @@ import java.util.Map;
 import java.util.Scanner;
 
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 public class Main {
+    static String A = "Please enter your choice:";
+    static String B = "Enter your choice: ";
+    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
     public static void mainMenu() {
-        System.out.println("\n===== MAIN MENU =====");
-        System.out.println("1-) Login to the system");
-        System.out.println("2-) Sign up for a new account"); // abood don't forget to enhance it as you imagine
-        System.out.println("3-) Log out of the system");
-        System.out.println("4-) Exit");
-        System.out.println("Please enter your choice:");
+        logger.info("\n===== MAIN MENU =====");
+        logger.info("1-) Login to the system");
+        logger.info("2-) Sign up for a new account"); // abood don't forget to enhance it as you imagine
+        logger.info("3-) Log out of the system");
+        logger.info("4-) Exit");
+        logger.info(A);
     }
 
     public static void adminMenu() {
-        System.out.println("\n===== Admin Dashboard =====");
-        System.out.println("1-) Manage accounts");
-        System.out.println("2-) Monitor profits");
-        System.out.println("3-) Generate financial reports");
-        System.out.println("4-) Identify best-selling products in each store");
-        System.out.println("5-) Display statistics on registered users by City");
-        System.out.println("6-) Manage the content shared on the system");
-        System.out.println("7-) Manage user feedback");
-        System.out.println("8-) Log out from the system");
-        System.out.println("Please enter your choice:");
+        logger.info("\n===== Admin Dashboard =====");
+        logger.info("1-) Manage accounts");
+        logger.info("2-) Monitor profits");
+        logger.info("3-) Generate financial reports");
+        logger.info("4-) Identify best-selling products in each store");
+        logger.info("5-) Display statistics on registered users by City");
+        logger.info("6-) Manage the content shared on the system");
+        logger.info("7-) Manage user feedback");
+        logger.info("8-) Log out from the system");
+        logger.info(A);
     }
 
     public static void userMenu() {
-        System.out.println("\n===== User Dashboard =====");
-        System.out.println("1-) Manage personal account");
-        System.out.println("2-) Browse and search for dessert recipes");
-        System.out.println("3-) Purchase desserts directly from store owners");
-        System.out.println("4-) Provide feedback on purchased products and shared recipes");
-        System.out.println("5-) Log out from the system");
-        System.out.println("Please enter your choice:");
+        logger.info("\n===== User Dashboard =====");
+        logger.info("1-) Manage personal account");
+        logger.info("2-) Browse and search for dessert recipes");
+        logger.info("3-) Purchase desserts directly from store owners");
+        logger.info("4-) Provide feedback on purchased products and shared recipes");
+        logger.info("5-) Log out from the system");
+        logger.info(A);
     }
 
 
@@ -58,7 +62,7 @@ public class Main {
 
         if (s.isLoggedIn()) {
             User currentUser = s.getCurrentUser();
-            System.out.println(s.getMessage());
+            logger.info(s.getMessage());
             if (currentUser instanceof Admin) {
                 handleAdminMenu(sc, s);
             } else if (currentUser instanceof Supplier) {
@@ -69,14 +73,14 @@ public class Main {
                 handleUserMenu(sc, s, currentUser);
             }
         } else {
-            System.out.println(s.getMessage());
+            logger.info(s.getMessage());
         }
     }
 
 
 
     public static void signUp(Scanner sc, sweetSys s) {
-        System.out.println("\n===== SIGN UP =====");
+        logger.info("\n===== SIGN UP =====");
         System.out.print("Enter username: ");
         String username = sc.nextLine();
         System.out.print("Enter password: ");
@@ -84,12 +88,12 @@ public class Main {
         System.out.print("Enter city: ");
         String city = sc.nextLine();
 
-        System.out.println("Select role:");
-        System.out.println("1-) Admin");
-        System.out.println("2-) Supplier");
-        System.out.println("3-) Owner");
-        System.out.println("4-) Regular User");
-        System.out.print("Enter your choice: ");
+        logger.info("Select role:");
+        logger.info("1-) Admin");
+        logger.info("2-) Supplier");
+        logger.info("3-) Owner");
+        logger.info("4-) Regular User");
+        System.out.print(B);
 
         String role = "regular";
         try {
@@ -110,15 +114,16 @@ public class Main {
                     role = "regular";
                     break;
                 default:
-                    System.out.println("Invalid role choice. Defaulting to regular user.");
+                    logger.info("Invalid role choice. Defaulting to regular user.");
+                    break;
             }
         } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Defaulting to regular user.");
+            logger.info("Invalid input. Defaulting to regular user.");
             sc.nextLine(); // Clear the invalid input
         }
 
         s.signUp(username, password, role, city);
-        System.out.println(s.getMessage());
+        logger.info(s.getMessage());
     }
 
 
@@ -128,12 +133,12 @@ public class Main {
     public static void manageAccountsMenu(Scanner sc, sweetSys s) {
         int choice;
         do {
-            System.out.println("\n===== Manage Accounts Menu =====");
-            System.out.println("1-) Get suppliers and owners");
-            System.out.println("2-) Update user role");
-            System.out.println("3-) Remove user");
-            System.out.println("4-) Back to Admin Menu");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Manage Accounts Menu =====");
+            logger.info("1-) Get suppliers and owners");
+            logger.info("2-) Update user role");
+            logger.info("3-) Remove user");
+            logger.info("4-) Back to Admin Menu");
+            System.out.print(B);
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -151,11 +156,11 @@ public class Main {
                     break;
                 }
                 case 4: {
-                    System.out.println("Returning to Admin Menu...");
+                    logger.info("Returning to Admin Menu...");
                     break;
                 }
                 default: {
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
                     break;
                 }
             }
@@ -165,29 +170,29 @@ public class Main {
     public static void displayUsersLists(sweetSys s) {
         List<User> ownerList = s.getAllOwners();
         List<User> supplierList = s.getAllSuppliers();
-        System.out.println("\n===== Users in the System =====");
-        //System.out.println("------------------------------------");
-        System.out.println(repeat("-", 36));
-        System.out.println("Store Owners:");
+        logger.info("\n===== Users in the System =====");
+        //logger.info("------------------------------------");
+        logger.info(repeat("-", 36));
+        logger.info("Store Owners:");
         for (User u : ownerList) {
             displayUserDetails(s, u.getUsername());
         }
-        System.out.println("------------------------------------");
-        System.out.println("Suppliers:");
+        logger.info("------------------------------------");
+        logger.info("Suppliers:");
         for (User u : supplierList) {
             displayUserDetails(s, u.getUsername());
         }
-        System.out.println("------------------------------------");
+        logger.info("------------------------------------");
     }
 
     public static void displayUserDetails(sweetSys s, String username) {
         Map<String, String> details = s.getUserDetails(username);
-        System.out.println("Username: " + details.get("username"));
-        System.out.println("Role: " + details.get("role"));
-        System.out.println("City: " + details.get("city"));
-        System.out.println("Email: " + details.get("email"));
-        System.out.println("Phone Number: " + details.get("phoneNumber"));
-        System.out.println();
+        logger.info("Username: " + details.get("username"));
+        logger.info("Role: " + details.get("role"));
+        logger.info("City: " + details.get("city"));
+        logger.info("Email: " + details.get("email"));
+        logger.info("Phone Number: " + details.get("phoneNumber"));
+        logger.info("");
     }
 
     public static void updateUserRole(Scanner sc, sweetSys s) {
@@ -196,24 +201,24 @@ public class Main {
         System.out.print("Enter the new role for " + userName + ": ");
         String newRole = sc.nextLine();
         s.updateUserRole(userName, newRole);
-        System.out.println(s.getMessage());
+        logger.info(s.getMessage());
     }
 
     public static void deleteUser(Scanner sc, sweetSys s) {
         System.out.print("Enter the User's name you want to delete from the system: ");
         String userName = sc.nextLine();
         s.deleteUser(userName);
-        System.out.println(s.getMessage());
+        logger.info(s.getMessage());
     }
 
     public static void manageUserAccount(Scanner sc, sweetSys s, User user) {
         int choice;
         do {
-            System.out.println("\n===== Manage Personal Account =====");
-            System.out.println("1-) View account details");
-            System.out.println("2-) Update account details");
-            System.out.println("3-) Back to User Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Manage Personal Account =====");
+            logger.info("1-) View account details");
+            logger.info("2-) Update account details");
+            logger.info("3-) Back to User Dashboard");
+            System.out.print(B);
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -227,11 +232,11 @@ public class Main {
                     break;
                 }
                 case 3: {
-                    System.out.println("Returning to User Dashboard...");
+                    logger.info("Returning to User Dashboard...");
                     break;
                 }
                 default: {
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
                     break;
                 }
             }
@@ -239,7 +244,7 @@ public class Main {
     }
 
     public static void updateUserDetails(Scanner sc, sweetSys s, User user) {
-        System.out.println("Enter new details (leave blank to keep current value):");
+        logger.info("Enter new details (leave blank to keep current value):");
 
         System.out.print("New password: ");
         String newPassword = sc.nextLine();
@@ -255,9 +260,9 @@ public class Main {
 
         boolean updated = s.updateUserDetails(user.getUsername(), newPassword, newCity, newEmail, newPhoneNumber);
         if (updated) {
-            System.out.println("Account details updated successfully.");
+            logger.info("Account details updated successfully.");
         } else {
-            System.out.println("Failed to update account details.");
+            logger.info("Failed to update account details.");
         }
     }
 
@@ -269,15 +274,15 @@ public class Main {
     public static void browseAndSearchRecipes(Scanner sc, sweetSys s) {
         int choice;
         do {
-            System.out.println("\n===== Browse and Search Recipes =====");
-            System.out.println("1-) Search recipes by keyword");
-            System.out.println("2-) Browse recipes by category");
-            System.out.println("3-) Browse all recipes");
-            System.out.println("4-) Filter recipes by dietary restriction");
-            System.out.println("5-) Filter recipes by allergy");
-            System.out.println("6-) Search with dietary filter");
-            System.out.println("7-) Back to User Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Browse and Search Recipes =====");
+            logger.info("1-) Search recipes by keyword");
+            logger.info("2-) Browse recipes by category");
+            logger.info("3-) Browse all recipes");
+            logger.info("4-) Filter recipes by dietary restriction");
+            logger.info("5-) Filter recipes by allergy");
+            logger.info("6-) Search with dietary filter");
+            logger.info("7-) Back to User Dashboard");
+            System.out.print(B);
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -301,10 +306,11 @@ public class Main {
                     searchRecipesWithDietaryFilter(sc, s);
                     break;
                 case 7:
-                    System.out.println("Returning to User Dashboard...");
+                    logger.info("Returning to User Dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
+                    break;
             }
         } while (choice != 7);
     }
@@ -359,11 +365,11 @@ public class Main {
 
     public static void displayRecipeResults(List<Recipe> recipes) {
         if (recipes.isEmpty()) {
-            System.out.println("No recipes found.");
+            logger.info("No recipes found.");
         } else {
-            System.out.println("\nFound " + recipes.size() + " recipes:");
+            logger.info("\nFound " + recipes.size() + " recipes:");
             for (Recipe recipe : recipes) {
-                System.out.println("- " + recipe.getName() + " (Category: " + recipe.getCategory() + ")");
+                logger.info("- " + recipe.getName() + " (Category: " + recipe.getCategory() + ")");
             }
         }
     }
@@ -371,13 +377,13 @@ public class Main {
 
 
     public static void purchaseDesserts(Scanner sc, sweetSys s, User user) {
-        System.out.println("\n===== Purchase Desserts =====");
+        logger.info("\n===== Purchase Desserts =====");
         System.out.print("Enter store owner username: ");
         String storeOwnerUsername = sc.nextLine();
         User storeOwner = s.getUserByUsername(storeOwnerUsername);
 
         if (storeOwner == null || !(storeOwner instanceof StoreOwner)) {
-            System.out.println("Invalid store owner.");
+            logger.info("Invalid store owner.");
             return;
         }
 
@@ -386,42 +392,42 @@ public class Main {
 
         Product dessert = ((StoreOwner) storeOwner).getProductByName(dessertName);
         if (dessert == null) {
-            System.out.println("Dessert not found.");
+            logger.info("Dessert not found.");
             return;
         }
 
         if (dessert.getQuantity() <= 0) {
-            System.out.println("Sorry, " + dessertName + " is out of stock.");
+            logger.info("Sorry, " + dessertName + " is out of stock.");
             return;
         }
 
-        System.out.println("Dessert: " + dessertName);
-        System.out.println("Price: $" + dessert.getPrice());
+        logger.info("Dessert: " + dessertName);
+        logger.info("Price: $" + dessert.getPrice());
         System.out.print("Confirm purchase (yes/no): ");
         String confirm = sc.nextLine();
 
         if (confirm.equalsIgnoreCase("yes")) {
             s.purchaseProduct(user.getUsername(), storeOwnerUsername, dessertName);
             if (s.isLastOperationSuccessful()) {
-                System.out.println("Purchase successful!");
+                logger.info("Purchase successful!");
                 displayOrderHistory(s, user);
             } else {
-                System.out.println("Purchase failed: " + s.getMessage());
+                logger.info("Purchase failed: " + s.getMessage());
             }
         } else {
-            System.out.println("Purchase cancelled.");
+            logger.info("Purchase cancelled.");
         }
     }
 
 
     public static void displayOrderHistory(sweetSys s, User user) {
         List<String> orderHistory = s.getUserOrderHistory(user.getUsername());
-        System.out.println("\nYour Order History:");
+        logger.info("\nYour Order History:");
         if (orderHistory.isEmpty()) {
-            System.out.println("No orders yet.");
+            logger.info("No orders yet.");
         } else {
             for (String order : orderHistory) {
-                System.out.println("- " + order);
+                logger.info("- " + order);
             }
         }
     }
@@ -436,7 +442,7 @@ public class Main {
 
 
     public static void monitorProfits(sweetSys s) {
-        System.out.println("\n===== Monitor Profits =====");
+        logger.info("\n===== Monitor Profits =====");
         Map<String, Double> profitBreakdown = s.calculateProfits();
 
         // Display overall profit summary
@@ -445,7 +451,7 @@ public class Main {
         System.out.printf("Total Profit: $%.2f%n", profitBreakdown.get("Total Profit"));
         System.out.printf("Profit Margin: %.2f%%%n", profitBreakdown.get("Profit Margin (%)"));
 
-        System.out.println("\nProfit Breakdown by Store:");
+        logger.info("\nProfit Breakdown by Store:");
         for (Map.Entry<String, Double> entry : profitBreakdown.entrySet()) {
             if (!entry.getKey().startsWith("Total") && !entry.getKey().equals("Profit Margin (%)")) {
                 System.out.printf("%s: $%.2f%n", entry.getKey(), entry.getValue());
@@ -455,11 +461,11 @@ public class Main {
         // Offer additional options
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("\nAdditional Options:");
-            System.out.println("1-) View profit trend");
-            System.out.println("2-) Analyze top-performing products");
-            System.out.println("3-) Return to Admin Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\nAdditional Options:");
+            logger.info("1-) View profit trend");
+            logger.info("2-) Analyze top-performing products");
+            logger.info("3-) Return to Admin Dashboard");
+            System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -473,23 +479,23 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         }
     }
 
     private static void viewProfitTrend(sweetSys s) {
-        System.out.println("\n===== Profit Trend =====");
+        logger.info("\n===== Profit Trend =====");
         // This is a placeholder. In a real system, you'd fetch historical data.
-        System.out.println("Profit trend analysis is not available in this version.");
+        logger.info("Profit trend analysis is not available in this version.");
         // Future enhancement: Implement actual trend analysis using historical data
     }
 
     private static void analyzeTopProducts(sweetSys s) {
-        System.out.println("\n===== Top-Performing Products =====");
+        logger.info("\n===== Top-Performing Products =====");
         Map<String, List<Product>> bestSellers = s.getBestSellingProductss();
         for (Map.Entry<String, List<Product>> entry : bestSellers.entrySet()) {
-            System.out.println("\nStore: " + entry.getKey());
+            logger.info("\nStore: " + entry.getKey());
             List<Product> products = entry.getValue();
             for (int i = 0; i < products.size(); i++) {
                 Product product = products.get(i);
@@ -504,17 +510,17 @@ public class Main {
 
 
     public static void generateFinancialReports(sweetSys s) {
-        System.out.println("\n===== Generate Financial Reports =====");
+        logger.info("\n===== Generate Financial Reports =====");
         String report = s.generateFinancialReport();
-        System.out.println(report);
+        logger.info(report);
 
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("\nOptions:");
-            System.out.println("1-) Save report to file");
-            System.out.println("2-) Email report");
-            System.out.println("3-) Return to Admin Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\nOptions:");
+            logger.info("1-) Save report to file");
+            logger.info("2-) Email report");
+            logger.info("3-) Return to Admin Dashboard");
+            System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -528,21 +534,21 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         }
     }
 
     private static void saveReportToFile(String report) {
-        System.out.println("Saving report to file...");
+        logger.info("Saving report to file...");
         // Placeholder for file saving functionality
-        System.out.println("Report saved successfully. (Note: This is a placeholder message)");
+        logger.info("Report saved successfully. (Note: This is a placeholder message)");
     }
 
     private static void emailReport(String report) {
-        System.out.println("Preparing to email report...");
+        logger.info("Preparing to email report...");
         // Placeholder for email functionality
-        System.out.println("Report emailed successfully. (Note: This is a placeholder message)");
+        logger.info("Report emailed successfully. (Note: This is a placeholder message)");
     }
 
 
@@ -552,7 +558,7 @@ public class Main {
     // identify best saling products :
 
     public static void identifyBestSellingProducts(sweetSys s) {
-        System.out.println("\n===== Identify Best-Selling Products in Each Store =====");
+        logger.info("\n===== Identify Best-Selling Products in Each Store =====");
 
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the number of top products to display for each store: ");
@@ -562,20 +568,20 @@ public class Main {
         Map<String, List<Map<String, Object>>> bestSellingProducts = s.identifyBestSellingProducts(topN);
 
         if (bestSellingProducts.isEmpty()) {
-            System.out.println("No sales data available.");
+            logger.info("No sales data available.");
             return;
         }
 
         for (Map.Entry<String, List<Map<String, Object>>> entry : bestSellingProducts.entrySet()) {
-            System.out.println("\nStore: " + entry.getKey());
+            logger.info("\nStore: " + entry.getKey());
             List<Map<String, Object>> products = entry.getValue();
 
             if (products.isEmpty()) {
-                System.out.println("  No sales data available for this store.");
+                logger.info("  No sales data available for this store.");
             } else {
                 System.out.printf("  %-20s %-15s %-15s %-15s%n", "Product", "Sales Quantity", "Revenue", "Profit Margin");
-                //System.out.println("  " + "-".repeat(70));
-                System.out.println("  " + repeat("-", 70));
+                //logger.info("  " + "-".repeat(70));
+                logger.info("  " + repeat("-", 70));
 
 
                 for (Map<String, Object> product : products) {
@@ -590,11 +596,11 @@ public class Main {
 
         // Additional analysis options
         while (true) {
-            System.out.println("\nAdditional Options:");
-            System.out.println("1-) Compare best-selling products across stores");
-            System.out.println("2-) Analyze product performance trends");
-            System.out.println("3-) Return to Admin Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\nAdditional Options:");
+            logger.info("1-) Compare best-selling products across stores");
+            logger.info("2-) Analyze product performance trends");
+            logger.info("3-) Return to Admin Dashboard");
+            System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -608,13 +614,13 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         }
     }
 
     private static void compareBestSellingProducts(Map<String, List<Map<String, Object>>> bestSellingProducts) {
-        System.out.println("\n===== Comparison of Best-Selling Products Across Stores =====");
+        logger.info("\n===== Comparison of Best-Selling Products Across Stores =====");
         Map<String, Double> productTotalSales = new HashMap<>();
 
         for (List<Map<String, Object>> storeProducts : bestSellingProducts.values()) {
@@ -629,8 +635,8 @@ public class Main {
         sortedProducts.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
 
         System.out.printf("%-20s %-15s%n", "Product", "Total Sales");
-        //System.out.println("-".repeat(36));
-        System.out.println(repeat("-", 36));
+        //logger.info("-".repeat(36));
+        logger.info(repeat("-", 36));
 
         for (Map.Entry<String, Double> entry : sortedProducts) {
             System.out.printf("%-20s $%-14.2f%n", entry.getKey(), entry.getValue());
@@ -638,9 +644,9 @@ public class Main {
     }
 
     private static void analyzeProductPerformanceTrends(sweetSys s) {
-        System.out.println("\n===== Product Performance Trends =====");
+        logger.info("\n===== Product Performance Trends =====");
         // This is a placeholder for future implementation
-        System.out.println("Product performance trend analysis is not available in this version.");
+        logger.info("Product performance trend analysis is not available in this version.");
         // Future enhancement: Implement actual trend analysis using historical data
     }
 
@@ -649,18 +655,18 @@ public class Main {
     // statistics for user by city
     //----------------------------------
     public static void displayUserStatisticsByCity(sweetSys s) {
-        System.out.println("\n===== Statistics on Registered Users by City =====");
+        logger.info("\n===== Statistics on Registered Users by City =====");
 
         Map<String, Integer> cityStats = s.getUserStatisticsByCity();
 
         if (cityStats.isEmpty()) {
-            System.out.println("No user data available.");
+            logger.info("No user data available.");
             return;
         }
 
         System.out.printf("%-20s %-10s%n", "City", "Users");
-       // System.out.println("-".repeat(31));
-        System.out.println(repeat("-", 31));
+       // logger.info("-".repeat(31));
+        logger.info(repeat("-", 31));
 
 
         int totalUsers = 0;
@@ -669,20 +675,20 @@ public class Main {
             totalUsers += entry.getValue();
         }
 
-        //System.out.println("-".repeat(31));
-        System.out.println(repeat("-", 31));
+        //logger.info("-".repeat(31));
+        logger.info(repeat("-", 31));
 
         System.out.printf("%-20s %-10d%n", "Total", totalUsers);
 
         // Additional analysis options
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("\nAdditional Options:");
-            System.out.println("1-) View city with most users");
-            System.out.println("2-) View city with least users");
-            System.out.println("3-) View percentage distribution");
-            System.out.println("4-) Return to Admin Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\nAdditional Options:");
+            logger.info("1-) View city with most users");
+            logger.info("2-) View city with least users");
+            logger.info("3-) View percentage distribution");
+            logger.info("4-) Return to Admin Dashboard");
+            System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -699,7 +705,7 @@ public class Main {
                 case 4:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         }
     }
@@ -715,10 +721,10 @@ public class Main {
     }
 
     private static void viewPercentageDistribution(Map<String, Integer> cityStats, int totalUsers) {
-        System.out.println("\nPercentage Distribution of Users by City");
+        logger.info("\nPercentage Distribution of Users by City");
         System.out.printf("%-20s %-10s %-10s%n", "City", "Users", "Percentage");
-       // System.out.println("-".repeat(42));
-        System.out.println(repeat("-", 42));
+       // logger.info("-".repeat(42));
+        logger.info(repeat("-", 42));
 
 
         for (Map.Entry<String, Integer> entry : cityStats.entrySet()) {
@@ -738,11 +744,11 @@ public class Main {
     public static void manageSharedContent(sweetSys s) {
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("\n===== Manage Shared Content =====");
-            System.out.println("1-) View all recipes");
-            System.out.println("2-) Delete a recipe");
-            System.out.println("3-) Return to Admin Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Manage Shared Content =====");
+            logger.info("1-) View all recipes");
+            logger.info("2-) Delete a recipe");
+            logger.info("3-) Return to Admin Dashboard");
+            System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -756,7 +762,7 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         }
     }
@@ -764,12 +770,12 @@ public class Main {
     private static void viewAllRecipes(sweetSys s) {
         List<Recipe> allRecipes = s.getAllRecipes();
         if (allRecipes.isEmpty()) {
-            System.out.println("No recipes found in the system.");
+            logger.info("No recipes found in the system.");
         } else {
-            System.out.println("\nAll Recipes in the System:");
+            logger.info("\nAll Recipes in the System:");
             System.out.printf("%-5s %-30s %-20s %-20s%n", "ID", "Name", "Category", "Author");
-            //System.out.println("-".repeat(80));
-            System.out.println(repeat("-", 80));
+            //logger.info("-".repeat(80));
+            logger.info(repeat("-", 80));
 
             for (Recipe recipe : allRecipes) {
                 System.out.printf("%-5d %-30s %-20s %-20s%n",
@@ -785,11 +791,11 @@ public class Main {
 
         Recipe recipe = s.getRecipeById(recipeId);
         if (recipe == null) {
-            System.out.println("Recipe not found.");
+            logger.info("Recipe not found.");
             return;
         }
 
-        System.out.println("Recipe details:");
+        logger.info("Recipe details:");
         System.out.printf("ID: %d%nName: %s%nCategory: %s%nAuthor: %s%n",
                 recipe.getId(), recipe.getName(), recipe.getCategory(), recipe.getAuthor());
 
@@ -799,12 +805,12 @@ public class Main {
         if (confirmation.equals("yes")) {
             boolean deleted = s.deleteRecipe(recipeId);
             if (deleted) {
-                System.out.println("Recipe deleted successfully.");
+                logger.info("Recipe deleted successfully.");
             } else {
-                System.out.println("Failed to delete the recipe.");
+                logger.info("Failed to delete the recipe.");
             }
         } else {
-            System.out.println("Deletion cancelled.");
+            logger.info("Deletion cancelled.");
         }
     }
 
@@ -819,11 +825,11 @@ public class Main {
     //----------------------------------------------------------------------------------
 
     public static void provideFeedback(Scanner sc, sweetSys s, User user) {
-        System.out.println("\n===== Provide Feedback =====");
-        System.out.println("1-) Provide feedback on purchased product");
-        System.out.println("2-) Provide feedback on shared recipe");
-        System.out.println("3-) Back to User Dashboard");
-        System.out.print("Enter your choice: ");
+        logger.info("\n===== Provide Feedback =====");
+        logger.info("1-) Provide feedback on purchased product");
+        logger.info("2-) Provide feedback on shared recipe");
+        logger.info("3-) Back to User Dashboard");
+        System.out.print(B);
         int choice = sc.nextInt();
         sc.nextLine(); // Consume newline
 
@@ -835,10 +841,10 @@ public class Main {
                 provideSharedRecipeFeedback(sc, s, user);
                 break;
             case 3:
-                System.out.println("Returning to User Dashboard...");
+                logger.info("Returning to User Dashboard...");
                 break;
             default:
-                System.out.println("Invalid choice");
+                logger.info("Invalid choice");
         }
     }
 
@@ -846,13 +852,13 @@ public class Main {
     public static void providePurchasedProductFeedback(Scanner sc, sweetSys s, User user) {
         List<String> orderHistory = s.getUserOrderHistory(user.getUsername());
         if (orderHistory.isEmpty()) {
-            System.out.println("You haven't purchased any products yet.");
+            logger.info("You haven't purchased any products yet.");
             return;
         }
 
-        System.out.println("Your purchased products:");
+        logger.info("Your purchased products:");
         for (int i = 0; i < orderHistory.size(); i++) {
-            System.out.println((i + 1) + ". " + orderHistory.get(i));
+            logger.info((i + 1) + ". " + orderHistory.get(i));
         }
 
         System.out.print("Enter the number of the product you want to provide feedback for: ");
@@ -860,7 +866,7 @@ public class Main {
         sc.nextLine(); // Consume newline
 
         if (productChoice < 1 || productChoice > orderHistory.size()) {
-            System.out.println("Invalid product number.");
+            logger.info("Invalid product number.");
             return;
         }
 
@@ -870,9 +876,9 @@ public class Main {
 
         boolean success = s.provideFeedback(user.getUsername(), productName, feedbackContent, false);
         if (success) {
-            System.out.println("Feedback submitted successfully.");
+            logger.info("Feedback submitted successfully.");
         } else {
-            System.out.println("Failed to submit feedback: " + s.getMessage());
+            logger.info("Failed to submit feedback: " + s.getMessage());
         }
     }
 
@@ -881,13 +887,13 @@ public class Main {
     public static void provideSharedRecipeFeedback(Scanner sc, sweetSys s, User user) {
         List<Recipe> allRecipes = s.getAllRecipes();
         if (allRecipes.isEmpty()) {
-            System.out.println("There are no shared recipes available.");
+            logger.info("There are no shared recipes available.");
             return;
         }
 
-        System.out.println("Shared recipes:");
+        logger.info("Shared recipes:");
         for (int i = 0; i < allRecipes.size(); i++) {
-            System.out.println((i + 1) + ". " + allRecipes.get(i).getName());
+            logger.info((i + 1) + ". " + allRecipes.get(i).getName());
         }
 
         System.out.print("Enter the number of the recipe you want to provide feedback for: ");
@@ -895,7 +901,7 @@ public class Main {
         sc.nextLine(); // Consume newline
 
         if (recipeChoice < 1 || recipeChoice > allRecipes.size()) {
-            System.out.println("Invalid recipe number.");
+            logger.info("Invalid recipe number.");
             return;
         }
 
@@ -905,9 +911,9 @@ public class Main {
 
         boolean success = s.provideFeedback(user.getUsername(), selectedRecipe.getName(), feedbackContent, true);
         if (success) {
-            System.out.println("Feedback submitted successfully.");
+            logger.info("Feedback submitted successfully.");
         } else {
-            System.out.println("Failed to submit feedback: " + s.getMessage());
+            logger.info("Failed to submit feedback: " + s.getMessage());
         }
     }
 
@@ -920,11 +926,11 @@ public class Main {
     public static void manageUserFeedback(sweetSys s) {
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("\n===== Manage User Feedback =====");
-            System.out.println("1-) View all feedback");
-            System.out.println("2-) Mark feedback as resolved");
-            System.out.println("3-) Return to Admin Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Manage User Feedback =====");
+            logger.info("1-) View all feedback");
+            logger.info("2-) Mark feedback as resolved");
+            logger.info("3-) Return to Admin Dashboard");
+            System.out.print(B);
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline
 
@@ -938,7 +944,7 @@ public class Main {
                 case 3:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         }
     }
@@ -946,12 +952,12 @@ public class Main {
     private static void viewAllFeedback(sweetSys s) {
         List<Feedback> allFeedback = s.getAllFeedback();
         if (allFeedback.isEmpty()) {
-            System.out.println("No feedback found in the system.");
+            logger.info("No feedback found in the system.");
         } else {
-            System.out.println("\nAll Feedback in the System:");
+            logger.info("\nAll Feedback in the System:");
             System.out.printf("%-5s %-20s %-50s %-10s %-10s%n", "ID", "Author", "Content", "Resolved", "Date");
-            //System.out.println("-".repeat(100));
-            System.out.println(repeat("-", 100));
+            //logger.info("-".repeat(100));
+            logger.info(repeat("-", 100));
 
             for (Feedback feedback : allFeedback) {
                 System.out.printf("%-5d %-20s %-50s %-10s %-10s%n",
@@ -971,18 +977,18 @@ public class Main {
 
         Feedback feedback = s.getFeedbackById(feedbackId);
         if (feedback == null) {
-            System.out.println("Feedback not found.");
+            logger.info("Feedback not found.");
             return;
         }
 
-        System.out.println("Feedback details:");
+        logger.info("Feedback details:");
         System.out.printf("ID: %d%nAuthor: %s%nContent: %s%nResolved: %s%nDate: %s%n",
                 feedback.getId(), feedback.getAuthor(), feedback.getContent(),
                 feedback.isResolved() ? "Yes" : "No",
                 feedback.getDate().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
         if (feedback.isResolved()) {
-            System.out.println("This feedback is already marked as resolved.");
+            logger.info("This feedback is already marked as resolved.");
             return;
         }
 
@@ -992,12 +998,12 @@ public class Main {
         if (confirmation.equals("yes")) {
             s.resolveFeedback(feedbackId);
             if (s.isLastOperationSuccessful()) {
-                System.out.println("Feedback marked as resolved successfully.");
+                logger.info("Feedback marked as resolved successfully.");
             } else {
-                System.out.println("Failed to mark feedback as resolved.");
+                logger.info("Failed to mark feedback as resolved.");
             }
         } else {
-            System.out.println("Operation cancelled.");
+            logger.info("Operation cancelled.");
         }
     }
 
@@ -1030,11 +1036,11 @@ public class Main {
                     break;
                 }
                 case 5: {
-                    System.out.println("Logging out from the user dashboard...");
+                    logger.info("Logging out from the user dashboard...");
                     break;
                 }
                 default: {
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
                     break;
                 }
             }
@@ -1078,11 +1084,11 @@ public class Main {
                     break;
                 }
                 case 8: {
-                    System.out.println("Logging out from the admin dashboard...");
+                    logger.info("Logging out from the admin dashboard...");
                     break;
                 }
                 default: {
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
                     break;
                 }
             }
@@ -1094,13 +1100,13 @@ public class Main {
 public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     int choice;
     do {
-        System.out.println("\n===== Manage Products =====");
-        System.out.println("1. Add a new product");
-        System.out.println("2. Update an existing product");
-        System.out.println("3. Remove a product");
-        System.out.println("4. View all products");
-        System.out.println("5. Return to Store Owner Dashboard");
-        System.out.print("Enter your choice: ");
+        logger.info("\n===== Manage Products =====");
+        logger.info("1. Add a new product");
+        logger.info("2. Update an existing product");
+        logger.info("3. Remove a product");
+        logger.info("4. View all products");
+        logger.info("5. Return to Store Owner Dashboard");
+        System.out.print(B);
 
         choice = sc.nextInt();
         sc.nextLine(); // Consume newline
@@ -1119,10 +1125,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                 viewAllProducts(s, owner);
                 break;
             case 5:
-                System.out.println("Returning to Store Owner Dashboard...");
+                logger.info("Returning to Store Owner Dashboard...");
                 break;
             default:
-                System.out.println("Invalid choice. Please try again.");
+                logger.info("Invalid choice. Please try again.");
         }
     } while (choice != 5);
 }
@@ -1140,9 +1146,9 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
         boolean added = s.addProduct(owner.getUsername(), newProduct);
 
         if (added) {
-            System.out.println("Product added successfully.");
+            logger.info("Product added successfully.");
         } else {
-            System.out.println("Failed to add product. It may already exist in the inventory.");
+            logger.info("Failed to add product. It may already exist in the inventory.");
         }
     }
 
@@ -1161,12 +1167,12 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
             if (quantity != -1) product.setQuantity(quantity);
             boolean updated = s.updateProduct(owner.getUsername(), name, product.getPrice(), product.getQuantity());
             if (updated) {
-                System.out.println("Product updated successfully.");
+                logger.info("Product updated successfully.");
             } else {
-                System.out.println("Failed to update product.");
+                logger.info("Failed to update product.");
             }
         } else {
-            System.out.println("Product not found in inventory.");
+            logger.info("Product not found in inventory.");
         }
     }
 
@@ -1176,20 +1182,20 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
 
         boolean removed = s.removeProduct(owner.getUsername(), name);
         if (removed) {
-            System.out.println("Product removed successfully.");
+            logger.info("Product removed successfully.");
         } else {
-            System.out.println("Failed to remove product. It may not exist in the inventory.");
+            logger.info("Failed to remove product. It may not exist in the inventory.");
         }
     }
 
     public static void viewAllProducts(sweetSys s, StoreOwner owner) {
         List<Product> inventory = owner.getInventory();
         if (inventory.isEmpty()) {
-            System.out.println("Your inventory is empty.");
+            logger.info("Your inventory is empty.");
         } else {
-            System.out.println("\nYour Inventory:");
+            logger.info("\nYour Inventory:");
             System.out.printf("%-5s %-20s %-10s %-10s%n", "ID", "Name", "Price", "Quantity");
-            System.out.println(repeat("-", 50));
+            logger.info(repeat("-", 50));
             for (Product product : inventory) {
                 System.out.printf("%-5d %-20s $%-9.2f %-10d%n",
                         product.getId(), product.getName(), product.getPrice(), product.getQuantity());
@@ -1203,11 +1209,11 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void monitorSalesAndProfits(Scanner sc, sweetSys s, StoreOwner owner) {
         int choice;
         do {
-            System.out.println("\n===== Monitor Sales and Profits =====");
-            System.out.println("1. View Sales Report");
-            System.out.println("2. View Profit Report");
-            System.out.println("3. Return to Store Owner Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Monitor Sales and Profits =====");
+            logger.info("1. View Sales Report");
+            logger.info("2. View Profit Report");
+            logger.info("3. Return to Store Owner Dashboard");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1220,10 +1226,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     viewProfitReport(s, owner);
                     break;
                 case 3:
-                    System.out.println("Returning to Store Owner Dashboard...");
+                    logger.info("Returning to Store Owner Dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 3);
     }
@@ -1231,9 +1237,9 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void viewSalesReport(sweetSys s, StoreOwner owner) {
         Map<String, Double> salesReport = s.getSalesReport(owner.getUsername());
         if (salesReport != null) {
-            System.out.println("\n===== Sales Report =====");
+            logger.info("\n===== Sales Report =====");
             System.out.printf("%-20s %-10s%n", "Product", "Revenue");
-            System.out.println(repeat("-", 32));
+            logger.info(repeat("-", 32));
             double totalRevenue = 0;
             for (Map.Entry<String, Double> entry : salesReport.entrySet()) {
                 if (!entry.getKey().equals("Total Revenue")) {
@@ -1241,38 +1247,38 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     totalRevenue += entry.getValue();
                 }
             }
-            System.out.println(repeat("-", 32));
+            logger.info(repeat("-", 32));
             System.out.printf("%-20s $%-9.2f%n", "Total Revenue", totalRevenue);
         } else {
-            System.out.println("Failed to generate sales report.");
+            logger.info("Failed to generate sales report.");
         }
     }
 
     public static void viewProfitReport(sweetSys s, StoreOwner owner) {
         Map<String, Double> profitReport = s.getProfitReport(owner.getUsername());
         if (profitReport != null) {
-            System.out.println("\n===== Profit Report =====");
+            logger.info("\n===== Profit Report =====");
             System.out.printf("%-20s %-10s%n", "Product", "Profit");
-            System.out.println(repeat("-", 32));
+            logger.info(repeat("-", 32));
             double totalProfit = 0;
             for (Map.Entry<String, Double> entry : profitReport.entrySet()) {
                 System.out.printf("%-20s $%-9.2f%n", entry.getKey(), entry.getValue());
                 totalProfit += entry.getValue();
             }
-            System.out.println(repeat("-", 32));
+            logger.info(repeat("-", 32));
             System.out.printf("%-20s $%-9.2f%n", "Total Profit", totalProfit);
         } else {
-            System.out.println("Failed to generate profit report.");
+            logger.info("Failed to generate profit report.");
         }
     }
 
     public static void identifyBestSellingProducts(Scanner sc, sweetSys s, StoreOwner owner) {
         String bestSeller = s.getBestSellingProduct(owner.getUsername());
         if (bestSeller != null) {
-            System.out.println("\n===== Best-Selling Product =====");
-            System.out.println("The best-selling product is: " + bestSeller);
+            logger.info("\n===== Best-Selling Product =====");
+            logger.info("The best-selling product is: " + bestSeller);
         } else {
-            System.out.println("Failed to identify the best-selling product.");
+            logger.info("Failed to identify the best-selling product.");
         }
     }
 
@@ -1283,12 +1289,12 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void manageDiscounts(Scanner sc, sweetSys s, StoreOwner owner) {
         int choice;
         do {
-            System.out.println("\n===== Manage Discounts =====");
-            System.out.println("1. Set a discount on a product");
-            System.out.println("2. Remove a discount from a product");
-            System.out.println("3. View all discounts");
-            System.out.println("4. Return to Store Owner Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Manage Discounts =====");
+            logger.info("1. Set a discount on a product");
+            logger.info("2. Remove a discount from a product");
+            logger.info("3. View all discounts");
+            logger.info("4. Return to Store Owner Dashboard");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1304,10 +1310,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     viewAllDiscounts(s, owner);
                     break;
                 case 4:
-                    System.out.println("Returning to Store Owner Dashboard...");
+                    logger.info("Returning to Store Owner Dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 4);
     }
@@ -1326,13 +1332,13 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
 
         boolean success = s.setProductDiscount(owner.getUsername(), productName, discountPercentage, startDate, endDate);
         if (success) {
-            System.out.println("Discount applied successfully.");
+            logger.info("Discount applied successfully.");
             Product product = owner.getProductByName(productName);
             if (product != null) {
                 System.out.printf("New discounted price: $%.2f%n", product.getDiscountedPrice());
             }
         } else {
-            System.out.println("Failed to apply discount. Please check the product name and try again.");
+            logger.info("Failed to apply discount. Please check the product name and try again.");
         }
     }
 
@@ -1342,21 +1348,21 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
 
         boolean success = s.removeProductDiscount(owner.getUsername(), productName);
         if (success) {
-            System.out.println("Discount removed successfully.");
+            logger.info("Discount removed successfully.");
             Product product = owner.getProductByName(productName);
             if (product != null) {
                 System.out.printf("Current price: $%.2f%n", product.getPrice());
             }
         } else {
-            System.out.println("Failed to remove discount. Please check the product name and try again.");
+            logger.info("Failed to remove discount. Please check the product name and try again.");
         }
     }
 
     public static void viewAllDiscounts(sweetSys s, StoreOwner owner) {
         List<Product> inventory = owner.getInventory();
-        System.out.println("\n===== Current Discounts =====");
+        logger.info("\n===== Current Discounts =====");
         System.out.printf("%-20s %-10s %-15s %-15s %-15s%n", "Product", "Price", "Discount", "Start Date", "End Date");
-        System.out.println(repeat("-", 80));
+        logger.info(repeat("-", 80));
         for (Product product : inventory) {
             if (product.isDiscountActive()) {
                 System.out.printf("%-20s $%-9.2f %-15.2f%% %-15s %-15s%n",
@@ -1375,11 +1381,11 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void messagingSystem(Scanner sc, sweetSys s, User user) {
         int choice;
         do {
-            System.out.println("\n===== Messaging System =====");
-            System.out.println("1. Send a message");
-            System.out.println("2. View received messages");
-            System.out.println("3. Return to Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Messaging System =====");
+            logger.info("1. Send a message");
+            logger.info("2. View received messages");
+            logger.info("3. Return to Dashboard");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1392,27 +1398,27 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     viewMessages(s, user);
                     break;
                 case 3:
-                    System.out.println("Returning to Dashboard...");
+                    logger.info("Returning to Dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 3);
     }
 
     public static void sendMessage(Scanner sc, sweetSys s, User sender) {
-        System.out.println("\n===== Send a Message =====");
+        logger.info("\n===== Send a Message =====");
         System.out.print("Enter recipient's username: ");
         String recipientUsername = sc.nextLine();
 
         User recipient = s.getUserByUsername(recipientUsername);
         if (recipient == null) {
-            System.out.println("Recipient not found. Please check the username and try again.");
+            logger.info("Recipient not found. Please check the username and try again.");
             return;
         }
 
         if (!(recipient instanceof Supplier || recipient instanceof Admin || recipient instanceof StoreOwner)) {
-            System.out.println("You can only send messages to suppliers, admins, or other store owners.");
+            logger.info("You can only send messages to suppliers, admins, or other store owners.");
             return;
         }
 
@@ -1421,24 +1427,24 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
 
         boolean sent = s.sendMessage(sender.getUsername(), recipientUsername, messageContent);
         if (sent) {
-            System.out.println("Message sent successfully.");
+            logger.info("Message sent successfully.");
         } else {
-            System.out.println("Failed to send message. Please try again later.");
+            logger.info("Failed to send message. Please try again later.");
         }
     }
 
     public static void viewMessages(sweetSys s, User user) {
-        System.out.println("\n===== Received Messages =====");
+        logger.info("\n===== Received Messages =====");
         List<Message> messages = s.getMessages(user.getUsername());
 
         if (messages.isEmpty()) {
-            System.out.println("You have no messages.");
+            logger.info("You have no messages.");
         } else {
             for (int i = 0; i < messages.size(); i++) {
                 Message message = messages.get(i);
                 System.out.printf("%d. From: %s | Date: %s%n", i + 1, message.getSender(), message.getTimestamp());
-                System.out.println("   " + message.getContent());
-                System.out.println();
+                logger.info("   " + message.getContent());
+                logger.info("");
             }
         }
     }
@@ -1448,10 +1454,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void manageStoreOwnerAccount(Scanner sc, sweetSys s, StoreOwner owner) {
         int choice;
         do {
-            System.out.println("\n===== Manage Account =====");
-            System.out.println("1. Change password");
-            System.out.println("2. Return to Store Owner Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Manage Account =====");
+            logger.info("1. Change password");
+            logger.info("2. Return to Store Owner Dashboard");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1461,10 +1467,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     changeStoreOwnerPassword(sc, s, owner);
                     break;
                 case 2:
-                    System.out.println("Returning to Store Owner Dashboard...");
+                    logger.info("Returning to Store Owner Dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 2);
     }
@@ -1477,9 +1483,9 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
 
         s.changePass(owner.getUsername(), oldPassword, newPassword);
         if (s.isLastOperationSuccessful()) {
-            System.out.println("Password changed successfully.");
+            logger.info("Password changed successfully.");
         } else {
-            System.out.println("Failed to change password. Please make sure your current password is correct.");
+            logger.info("Failed to change password. Please make sure your current password is correct.");
         }
     }
 
@@ -1489,11 +1495,11 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void manageOrders(Scanner sc, sweetSys s, StoreOwner owner) {
         int choice;
         do {
-            System.out.println("\n===== Order Management =====");
-            System.out.println("1. View All Orders");
-            System.out.println("2. Update Order Status");
-            System.out.println("3. Return to Store Owner Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Order Management =====");
+            logger.info("1. View All Orders");
+            logger.info("2. Update Order Status");
+            logger.info("3. Return to Store Owner Dashboard");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1506,10 +1512,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     updateOrderStatus(sc, s, owner);
                     break;
                 case 3:
-                    System.out.println("Returning to Store Owner Dashboard...");
+                    logger.info("Returning to Store Owner Dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 3);
     }
@@ -1517,11 +1523,11 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void viewAllOrders(sweetSys s, StoreOwner owner) {
         List<Order> orders = s.getOrdersByOwner(owner.getUsername());
         if (orders.isEmpty()) {
-            System.out.println("No orders found.");
+            logger.info("No orders found.");
         } else {
-            System.out.println("\nAll Orders:");
+            logger.info("\nAll Orders:");
             System.out.printf("%-5s %-15s %-15s %-15s%n", "ID", "Recipient", "Status", "Address");
-            System.out.println(repeat("-", 55));
+            logger.info(repeat("-", 55));
             for (Order order : orders) {
                 System.out.printf("%-5s %-15s %-15s %-15s%n",
                         order.getId(), order.getRecipient(), order.getStatus(), order.getAddress());
@@ -1535,20 +1541,20 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
         Order order = s.getOrderById(orderId);
 
         if (order == null) {
-            System.out.println("Order not found.");
+            logger.info("Order not found.");
             return;
         }
 
-        System.out.println("Current status: " + order.getStatus());
+        logger.info("Current status: " + order.getStatus());
         System.out.print("Enter the new status: ");
         String newStatus = sc.nextLine();
 
         s.updateOrder(orderId, order.getStatus(), newStatus);
 
         if (s.checkOrderState(orderId).equals(newStatus)) {
-            System.out.println("Order status updated successfully.");
+            logger.info("Order status updated successfully.");
         } else {
-            System.out.println("Failed to update order status.");
+            logger.info("Failed to update order status.");
         }
     }
 
@@ -1564,16 +1570,16 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void handleStoreOwnerMenu(Scanner sc, sweetSys s, User user) {
         int choice;
         do {
-            System.out.println("\n===== Store Owner Dashboard =====");
-            System.out.println("1. Manage Products");
-            System.out.println("2. Monitor Sales and Profits");
-            System.out.println("3. Identify Best-Selling Products");
-            System.out.println("4. Manage Discounts");
-            System.out.println("5. Messaging System");
-            System.out.println("6. Manage Account");
-            System.out.println("7. Order Management");
-            System.out.println("8. Log out");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Store Owner Dashboard =====");
+            logger.info("1. Manage Products");
+            logger.info("2. Monitor Sales and Profits");
+            logger.info("3. Identify Best-Selling Products");
+            logger.info("4. Manage Discounts");
+            logger.info("5. Messaging System");
+            logger.info("6. Manage Account");
+            logger.info("7. Order Management");
+            logger.info("8. Log out");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1601,10 +1607,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     manageOrders(sc, s, (StoreOwner) user);
                     break;
                 case 8:
-                    System.out.println("Logging out from the Store Owner dashboard...");
+                    logger.info("Logging out from the Store Owner dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 8);
     }
@@ -1617,13 +1623,13 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void manageSupplierProducts(Scanner sc, sweetSys s, Supplier supplier) {
         int choice;
         do {
-            System.out.println("\n===== Manage Supplier Products =====");
-            System.out.println("1. Add a new product");
-            System.out.println("2. Update an existing product");
-            System.out.println("3. Remove a product");
-            System.out.println("4. View all products");
-            System.out.println("5. Return to Supplier Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Manage Supplier Products =====");
+            logger.info("1. Add a new product");
+            logger.info("2. Update an existing product");
+            logger.info("3. Remove a product");
+            logger.info("4. View all products");
+            logger.info("5. Return to Supplier Dashboard");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1642,10 +1648,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     viewSupplierProducts(s, supplier);
                     break;
                 case 5:
-                    System.out.println("Returning to Supplier Dashboard...");
+                    logger.info("Returning to Supplier Dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 5);
     }
@@ -1663,9 +1669,9 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
         boolean added = s.addProduct(supplier.getUsername(), newProduct);
 
         if (added) {
-            System.out.println("Product added successfully.");
+            logger.info("Product added successfully.");
         } else {
-            System.out.println("Failed to add product. It may already exist in the inventory.");
+            logger.info("Failed to add product. It may already exist in the inventory.");
         }
     }
 
@@ -1684,12 +1690,12 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
             if (quantity != -1) product.setQuantity(quantity);
             boolean updated = s.updateProduct(supplier.getUsername(), name, product.getPrice(), product.getQuantity());
             if (updated) {
-                System.out.println("Product updated successfully.");
+                logger.info("Product updated successfully.");
             } else {
-                System.out.println("Failed to update product.");
+                logger.info("Failed to update product.");
             }
         } else {
-            System.out.println("Product not found in inventory.");
+            logger.info("Product not found in inventory.");
         }
     }
 
@@ -1699,20 +1705,20 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
 
         boolean removed = s.removeProduct(supplier.getUsername(), name);
         if (removed) {
-            System.out.println("Product removed successfully.");
+            logger.info("Product removed successfully.");
         } else {
-            System.out.println("Failed to remove product. It may not exist in the inventory.");
+            logger.info("Failed to remove product. It may not exist in the inventory.");
         }
     }
 
     private static void viewSupplierProducts(sweetSys s, Supplier supplier) {
         List<Product> inventory = supplier.getInventory();
         if (inventory.isEmpty()) {
-            System.out.println("Your inventory is empty.");
+            logger.info("Your inventory is empty.");
         } else {
-            System.out.println("\nYour Inventory:");
+            logger.info("\nYour Inventory:");
             System.out.printf("%-5s %-20s %-10s %-10s%n", "ID", "Name", "Price", "Quantity");
-            System.out.println(repeat("-", 50));
+            logger.info(repeat("-", 50));
             for (Product product : inventory) {
                 System.out.printf("%-5d %-20s $%-9.2f %-10d%n",
                         product.getId(), product.getName(), product.getPrice(), product.getQuantity());
@@ -1723,10 +1729,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void manageSupplierAccount(Scanner sc, sweetSys s, Supplier supplier) {
         int choice;
         do {
-            System.out.println("\n===== Manage Account =====");
-            System.out.println("1. Change password");
-            System.out.println("2. Return to Supplier Dashboard");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Manage Account =====");
+            logger.info("1. Change password");
+            logger.info("2. Return to Supplier Dashboard");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1736,10 +1742,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     changeSupplierPassword(sc, s, supplier);
                     break;
                 case 2:
-                    System.out.println("Returning to Supplier Dashboard...");
+                    logger.info("Returning to Supplier Dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 2);
     }
@@ -1752,9 +1758,9 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
 
         s.changePass(supplier.getUsername(), oldPassword, newPassword);
         if (s.isLastOperationSuccessful()) {
-            System.out.println("Password changed successfully.");
+            logger.info("Password changed successfully.");
         } else {
-            System.out.println("Failed to change password. Please make sure your current password is correct.");
+            logger.info("Failed to change password. Please make sure your current password is correct.");
         }
     }
 
@@ -1763,12 +1769,12 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
     public static void handleSupplierMenu(Scanner sc, sweetSys s, User user) {
         int choice;
         do {
-            System.out.println("\n===== Supplier Dashboard =====");
-            System.out.println("1. Manage Products");
-            System.out.println("2. Messaging System");
-            System.out.println("3. Manage Account");
-            System.out.println("4. Log out");
-            System.out.print("Enter your choice: ");
+            logger.info("\n===== Supplier Dashboard =====");
+            logger.info("1. Manage Products");
+            logger.info("2. Messaging System");
+            logger.info("3. Manage Account");
+            logger.info("4. Log out");
+            System.out.print(B);
 
             choice = sc.nextInt();
             sc.nextLine(); // Consume newline
@@ -1784,10 +1790,10 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     manageSupplierAccount(sc, s, (Supplier) user);
                     break;
                 case 4:
-                    System.out.println("Logging out from the Supplier dashboard...");
+                    logger.info("Logging out from the Supplier dashboard...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.info("Invalid choice. Please try again.");
             }
         } while (choice != 4);
     }
@@ -1834,19 +1840,19 @@ public static void manageProducts(Scanner sc, sweetSys s, StoreOwner owner) {
                     }
                     case 3: {
                         s.logout();
-                        System.out.println(s.getMessage());
+                        logger.info(s.getMessage());
                         break;
                     }
                     case 4: {
-                        System.out.println("Exiting the system. Goodbye!");
+                        logger.info("Exiting the system. Goodbye!");
                         sc.close();
                         System.exit(0);
                     }
                     default:
-                        System.out.println("Invalid choice. Please select a number between 1 and 4.");
+                        logger.info("Invalid choice. Please select a number between 1 and 4.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                logger.info("Invalid input. Please enter a number.");
                 sc.nextLine(); // Clear the invalid input
             }
         }

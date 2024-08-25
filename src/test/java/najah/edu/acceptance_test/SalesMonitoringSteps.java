@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import MySystem.*;
 import io.cucumber.java.en.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class SalesMonitoringSteps {
     private sweetSys sweetSys;
@@ -11,6 +12,7 @@ public class SalesMonitoringSteps {
     private Map<String, Double> salesReport;
     private Map<String, Double> profitReport;
     private String bestSellingProduct;
+    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
 
     public SalesMonitoringSteps(sweetSys sweetSys) {
         this.sweetSys = sweetSys;
@@ -51,9 +53,9 @@ public class SalesMonitoringSteps {
     @Then("the sales report should show total revenue of {double}")
     public void the_sales_report_should_show_total_revenue_of(Double expectedRevenue) {
         assertEquals("Total revenue should match", expectedRevenue, salesReport.get("Total Revenue"), 0.01);
-        System.out.println("Expected revenue: " + expectedRevenue);
-        System.out.println("Actual revenue: " + salesReport.get("Total Revenue"));
-        System.out.println("Full sales report: " + salesReport);
+        logger.info("Expected revenue: " + expectedRevenue);
+        logger.info("Actual revenue: " + salesReport.get("Total Revenue"));
+        logger.info("Full sales report: " + salesReport);
     }
 
     @Then("the sales report should show {string} as the best-selling product")

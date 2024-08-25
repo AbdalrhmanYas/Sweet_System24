@@ -5,6 +5,7 @@ import MySystem.*;
 import io.cucumber.java.en.*;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class userLoginLogupSteps {
     
@@ -14,6 +15,7 @@ public class userLoginLogupSteps {
     private String confirmPassword;
     private String city;
     private String role;
+    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
     
     private User currentUser;  
     private Map<String, String> userDetails;  
@@ -39,7 +41,7 @@ public class userLoginLogupSteps {
 
        @When("user enters username {string} and password {string}")
        public void user_enters_username_and_password(String username, String password) {
-           System.out.println("Attempting to login with username: " + username + " and password: " + password);
+           logger.info("Attempting to login with username: " + username + " and password: " + password);
            myApp.login(username, password);
        }
 

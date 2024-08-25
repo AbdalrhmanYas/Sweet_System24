@@ -4,17 +4,19 @@ import static org.junit.Assert.*;
 import MySystem.*;
 import io.cucumber.java.en.*;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class RecipeExplorationSteps {
     private sweetSys myApp;
     private List<Recipe> searchResults;
     private List<Recipe> browseResults;
+    private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
 
     public RecipeExplorationSteps(sweetSys sweetSys) {
         this.myApp = sweetSys;
         
         
-        System.out.println("RecipeExplorationSteps initialized with sweetSys: " + sweetSys); // i want to track the last failure
+        logger.info("RecipeExplorationSteps initialized with sweetSys: " + sweetSys); // i want to track the last failure
     }
 
     // Remove the duplicate step definition because this testcase file can use the testing of this step from userLoginLogupSteps testcase file , while we had programmed this step  (  @Given("the user is logged in") in this calss --->userLoginLogupSteps
@@ -22,11 +24,11 @@ public class RecipeExplorationSteps {
 
     @When("the user searches for recipes containing {string}")
     public void the_user_searches_for_recipes_containing(String keyword) {
-        System.out.println("Searching for recipes containing '" + keyword + "' using sweetSys: " + myApp); // while toString() for sweetSys is not overridden so it will put  sweetSys@7a8fa663 in the place of myApp
+        logger.info("Searching for recipes containing '" + keyword + "' using sweetSys: " + myApp); // while toString() for sweetSys is not overridden so it will put  sweetSys@7a8fa663 in the place of myApp
         searchResults = myApp.searchRecipes(keyword);
-        System.out.println("Search results for '" + keyword + "': " + searchResults.size());
+        logger.info("Search results for '" + keyword + "': " + searchResults.size());
         for (Recipe recipe : searchResults) {
-            System.out.println("- " + recipe.getName());
+            logger.info("- " + recipe.getName());
         }
     }
     
@@ -53,7 +55,7 @@ public class RecipeExplorationSteps {
     
     @Then("the number of search results should be greater than {int}")
     public void the_number_of_search_results_should_be_greater_than(Integer minResults) {
-        System.out.println("Asserting that search results (" + searchResults.size() + ") are greater than or equal to " + minResults);
+        logger.info("Asserting that search results (" + searchResults.size() + ") are greater than or equal to " + minResults);
         assertTrue("Number of search results should be greater than or equal to " + minResults + 
                    " but was " + searchResults.size() + 
                    ". Search results: " + searchResults, 
