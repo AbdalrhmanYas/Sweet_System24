@@ -12,7 +12,7 @@ public class userLoginLogupSteps {
     private sweetSys myApp;
     private String username;   // THIS AND OTHER ATTRIPUTES FOR SIGN UP TESTING 
     private String password;
-    private String confirmPassword;
+    private String conpass;
     private String city;
     private String role;
     private static final Logger logger = Logger.getLogger(InventoryManager.class.getName());
@@ -97,7 +97,7 @@ public class userLoginLogupSteps {
     
     @When("the user confirms the password {string}")
     public void the_user_confirms_the_password(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+        this.conpass = confirmPassword;
     }
     
     @When("the user selects the role {string}")
