@@ -55,11 +55,11 @@ public class sweetSys {
     static String X ="Ramallah";
     static String Y = "Hebron";
     static String WE = "Bethlehem";
-    static String z ="regular";
-    static String w ="User not found.";
-    static String t =" Revenue";
-    static String r =" Profit";
-    static String s ="Total Revenue";
+    static String ZA ="regular";
+    static String WB ="User not found.";
+    static String WT =" Revenue";
+    static String WR =" Profit";
+    static String WS ="Total Revenue";
     public sweetSys() {
         orders = new ArrayList<>();
         users = new ArrayList<>();
@@ -143,11 +143,11 @@ public class sweetSys {
         users.add(new StoreOwner("owner5", "ownerpass5", WE));
 
         // Regular Users
-        users.add(new User(O, "userpass1", z, V));
-        users.add(new User(S, "userpass2", z, W));
-        users.add(new User(T, "userpass3", z, X));
-        users.add(new User("user4", "userpass4", z, Y));
-        users.add(new User("user5", "userpass5", z, WE));
+        users.add(new User(O, "userpass1", ZA, V));
+        users.add(new User(S, "userpass2", ZA, W));
+        users.add(new User(T, "userpass3", ZA, X));
+        users.add(new User("user4", "userpass4", ZA, Y));
+        users.add(new User("user5", "userpass5", ZA, WE));
     }
 
 
@@ -300,7 +300,7 @@ public class sweetSys {
             lastOperationSuccessful = true;
             return true;
         }
-        msg = w;
+        msg = WB;
         lastOperationSuccessful = false;
         return false;
     }
@@ -334,7 +334,7 @@ public class sweetSys {
             lastOperationSuccessful = true;
             return details;
         }
-        msg = w;
+        msg = WB;
         lastOperationSuccessful = false;
         return null;
     }
@@ -430,7 +430,7 @@ public class sweetSys {
             msg = "Funds added successfully.";
             lastOperationSuccessful = true;
         } else {
-            msg = w;
+            msg = WB;
             lastOperationSuccessful = false;
         }
     }
@@ -544,7 +544,7 @@ public class sweetSys {
                 return;
             }
         }
-        msg = w;
+        msg = WB;
         lastOperationSuccessful = false;
     }
 
@@ -554,7 +554,7 @@ public class sweetSys {
             msg = "User deleted successfully.";
             lastOperationSuccessful = true;
         } else {
-            msg = w;
+            msg = WB;
             lastOperationSuccessful = false;
         }
     }
@@ -579,9 +579,9 @@ public class sweetSys {
                     storeCosts += product.getCost() * product.getSalesQuantity();
                 }
                 double storeProfit = storeRevenue - storeCosts;
-                profitBreakdown.put(owner.getUsername() + t, storeRevenue);
+                profitBreakdown.put(owner.getUsername() + WT, storeRevenue);
                 profitBreakdown.put(owner.getUsername() + " Costs", storeCosts);
-                profitBreakdown.put(owner.getUsername() + r, storeProfit);
+                profitBreakdown.put(owner.getUsername() + WR, storeProfit);
                 totalRevenue += storeRevenue;
                 totalCosts += storeCosts;
                 totalProfit += storeProfit;
@@ -589,7 +589,7 @@ public class sweetSys {
         }
 
         // Add totals to the breakdown
-        profitBreakdown.put(s, totalRevenue);
+        profitBreakdown.put(WS, totalRevenue);
         profitBreakdown.put("Total Costs", totalCosts);
         profitBreakdown.put("Total Profit", totalProfit);
 
@@ -610,7 +610,7 @@ public class sweetSys {
 
         // Overall Summary
         report.append("1. Overall Financial Summary\n");
-        report.append(String.format("   Total Revenue: $%.2f\n", profitData.get(s)));
+        report.append(String.format("   Total Revenue: $%.2f\n", profitData.get(WS)));
         report.append(String.format("   Total Expenses: $%.2f\n", profitData.get("Total Costs"))); // Changed to "Expenses"
         report.append(String.format("   Total Profit: $%.2f\n", profitData.get("Total Profit")));
         report.append(String.format("   Profit Margin: %.2f%%\n\n", profitData.get("Profit Margin (%)")));
@@ -624,11 +624,11 @@ public class sweetSys {
             if (user instanceof StoreOwner) {
                 StoreOwner owner = (StoreOwner) user;
                 report.append(String.format("   Store: %s\n", owner.getUsername()));
-                report.append(String.format("     Revenue: $%.2f\n", profitData.get(owner.getUsername() + t)));
+                report.append(String.format("     Revenue: $%.2f\n", profitData.get(owner.getUsername() + WT)));
                 report.append(String.format("     Costs: $%.2f\n", profitData.get(owner.getUsername() + " Costs")));
-                report.append(String.format("     Profit: $%.2f\n", profitData.get(owner.getUsername() + r)));
-                double storeMargin = profitData.get(owner.getUsername() + t) > 0 ?
-                        (profitData.get(owner.getUsername() + r) / profitData.get(owner.getUsername() + t)) * 100 : 0;
+                report.append(String.format("     Profit: $%.2f\n", profitData.get(owner.getUsername() + WR)));
+                double storeMargin = profitData.get(owner.getUsername() + WT) > 0 ?
+                        (profitData.get(owner.getUsername() + WR) / profitData.get(owner.getUsername() + WT)) * 100 : 0;
                 report.append(String.format("     Profit Margin: %.2f%%\n\n", storeMargin));
             }
         }
@@ -803,7 +803,7 @@ public class sweetSys {
                 salesReport.put(product.getName(), productRevenue);
                 totalRevenue += productRevenue;
             }
-            salesReport.put(s, totalRevenue);
+            salesReport.put(WS, totalRevenue);
             msg = "Sales report generated successfully.";
             lastOperationSuccessful = true;
             return salesReport;

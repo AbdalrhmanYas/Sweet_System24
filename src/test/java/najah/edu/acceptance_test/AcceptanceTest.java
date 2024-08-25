@@ -11,6 +11,7 @@ import io.cucumber.junit.CucumberOptions;
         plugin = {"html:target/cucumber-report/report.html"},
         monochrome = true,
         glue = "najah.edu.acceptance_test"
+
 )
 
 public class AcceptanceTest {
