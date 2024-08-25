@@ -3,12 +3,18 @@
   <groupId>Software.Projects</groupId>
   <artifactId>Sweet_System</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
-  
-  
-  
-  
-  <dependencies>
+
+
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
+
+    <dependencies>
   
   <!--my comment/////////////////////////////////////////////////////////-->
   
