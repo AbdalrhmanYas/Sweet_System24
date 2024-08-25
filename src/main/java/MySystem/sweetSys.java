@@ -64,6 +64,9 @@ public class sweetSys {
     static String ER ="owner";
     static String SU ="supplier";
     static String AD ="admin";
+    private void logAddedRecipe(Recipe recipe) {
+        logger.info("Added recipe: " + recipe.getName());
+    }
     public sweetSys() {
         orders = new ArrayList<>();
         users = new ArrayList<>();
@@ -93,10 +96,10 @@ public class sweetSys {
         recipes = new ArrayList<>();
         logger.info("Initializing recipes:");
 
-        Recipe chocolateCake = new Recipe(1, P, "flour, sugar, cocoa powder, eggs, milk", R, O, Q);
+        Recipe chocolateCake = new Recipe(1, "Chocolate Cake", "flour, sugar, cocoa powder, eggs, milk", "Mix and bake", "user1", "Cakes");
         chocolateCake.addDietaryRestriction("vegetarian");
         recipes.add(chocolateCake);
-        logger.info(String.format("{}{}", I, chocolateCake.getName()));
+        logAddedRecipe(chocolateCake);
 
         Recipe veganBrownies = new Recipe(2, "Vegan Brownies", "flour, sugar, cocoa powder, vegan butter, almond milk", R, S, "Brownies");
         veganBrownies.addDietaryRestriction("vegan");
